@@ -4,7 +4,7 @@ const R = require('r-script')
 const core = (rScript) => `../core/${rScript}`
 
 // this is a hello world to connect R to nodejs.
-app.get('/hw', async (req, res) => {
+app.get('/exsync', async (req, res) => {
     console.log('R is processing.')
     R(core('ex-sync.R'))
         .data('hello world', 20)
