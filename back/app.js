@@ -20,7 +20,7 @@ app.get('/test', async (req, res) => {
     R(core('test.R'))
         .data({ toto: 'The output string' })
         .call((err, out) => {
-            if (err) throw err
+            if (err) console.log(err)
             res.send(out)
         })
     console.log('R has processed.')
