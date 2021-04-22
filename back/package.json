@@ -3,8 +3,10 @@
     "version": "1.0.0",
     "dependencies": {
         "body-parser": "^1.19.0",
+        "csvtojson": "^2.0.10",
         "express": "^4.17.1",
-        "r-script": "0.0.4"
+        "r-script": "0.0.4",
+        "xlsx": "^0.16.9"
     },
     "devDependencies": {
         "cors": "^2.8.5"
