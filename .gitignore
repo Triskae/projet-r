@@ -1,2 +1,4 @@
 node_modules
 .idea
+/back/images/**
+!/back/images/README.md
