@@ -1,1 +1,1 @@
-module.exports = { core: (rScript) => `../core/${rScript}` }
+module.exports = (rScript) => `../core/${rScript}`

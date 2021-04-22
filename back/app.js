@@ -1,7 +1,5 @@
-const R = require('r-script')
-const _ = require('lodash')
+const R = require('./Rscripts')
 const app = require('./server')
-const h = require('./helpers')
 
 app.get('/classifier/rpart', async (req, res) => {
     const inputs = {
@@ -11,5 +9,7 @@ app.get('/classifier/rpart', async (req, res) => {
         arg4: req.body.arg4,
     }
 
-    const outputData = R(core('rpart.R')).data().callSync()
+    const output = await R.rpart(inputs)
+
+    res.send(output)
 })
