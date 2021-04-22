@@ -29,7 +29,7 @@ app.get('/test', async (req, res) => {
     console.log('R has processed.')
 })
 
-app.get('/model', async (req, res) => {
+app.get('/classifier/rpart', async (req, res) => {
     console.log('R is processing.')
     const outputData = R(core('rpart.R'))
         .data({
