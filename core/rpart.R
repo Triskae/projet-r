@@ -46,9 +46,17 @@ plot(dt_perf, main = "Arbres de décision rpart()", add = arg3, col = arg4)
 dt_auc <- performance(dt_pred, "auc")
 cat("AUC = ", as.character(attr(dt_auc, "y.values")))
 
- return(list("prediction"=dt_class,"dataet"=data_et))
-}
+ confusionMatrix <- as.matrix(
+   table(data_et$default, dt_class),
+ )
 
+ return(list("prediction"=dt_class,
+             "dataet"=data_et,
+             "confusionMatrix"=
+               list("predictedPositive"=confusionMatrix[1,]
+               ,"predictedNegative"=confusionMatrix[2,])
+ ))
+}
 
 
 test_rpart(arg1,arg2,arg3,arg4)

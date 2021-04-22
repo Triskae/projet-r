@@ -3,10 +3,14 @@ const R = require('r-script')
 const core = require('./core')
 
 module.exports = async (inputs) => {
-    const outputData = await R(core('rpart.R')).data(inputs).callSync()
+    const outputData = { ...(await R(core('rpart.R')).data(inputs).callSync()) }
 
-    return _.map(outputData.prediction, (x, i) => ({
-        ...outputData.dataet[i],
-        prediction: x,
-    }))
+    return {
+        predicted_data: _.map(outputData.prediction, (x, i) => ({
+            ...outputData.dataet[i],
+            prediction: x,
+        })),
+        dataet: outputData.dataet,
+        confusionMatrix: outputData.confusionMatrix,
+    }
 }
