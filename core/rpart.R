@@ -1,11 +1,13 @@
-#attach(input[[1]])
-
 #--------------------------------------#
 # ACTIVATION DES LIRAIRIES NECESSAIRES #
 #--------------------------------------#
 attach(input[[1]])
 needs(rpart)
 needs(ROCR)
+
+#-------------------------#
+# PREPARATION DES DONNEES #
+#-------------------------#
 
 setwd('data')
 data <- read.csv("dataset.csv", header = TRUE, sep = ",", dec = ".", stringsAsFactors = T)
@@ -16,6 +18,10 @@ data_ea <- data_shuffle[1:800,]
 data_et <- data_shuffle[801:1200,]
 
 jpeg('rpart.jpg')
+
+#-------------------------#
+# ARBRE DE DECISION RPART #
+#-------------------------#
 
 # Apprentissage du classifeur
 test_rpart <- function(arg1, arg2, arg3, arg4){
