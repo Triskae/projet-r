@@ -1,4 +1,5 @@
 const R = require('r-script')
+const _ = require('lodash')
 const app = require('./server')
 const h = require('./helpers')
 
@@ -21,7 +22,7 @@ app.get('/test', async (req, res) => {
     console.log('R is processing.')
     R(core('test.R'))
         .data({ toto: 'The output string' })
-        .call((err, out) => {
+        .callSync((err, out) => {
             if (err) throw err
             res.send(out)
         })
@@ -30,11 +31,15 @@ app.get('/test', async (req, res) => {
 
 app.get('/model', async (req, res) => {
     console.log('R is processing.')
-    R(core('processData.R'))
+    const outputData = R(core('processData.R'))
         .data({ toto: 'The output string' })
-        .call((err, out) => {
-            if (err) throw err
-            res.send(out)
-        })
+        .callSync()
+
+    const response = _.map(outputData.prediction, (x, i) => ({
+        ...outputData.dataet[i],
+        prediction: x,
+    }))
+
+    res.send(response)
     console.log('R has processed.')
 })

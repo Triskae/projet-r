@@ -6,7 +6,7 @@
 
 needs(rpart)
 
-#setwd('back/data')
+setwd('data')
 data <- read.csv("dataset.csv", header = TRUE, sep = ",", dec = ".", stringsAsFactors = T)
 data_shuffle <- data[sample(seq_along(data[, 1])),]
 
@@ -20,13 +20,13 @@ arg2<-10
 # Apprentissage du classifeur
 dt <- rpart(default~., data_ea, parms = list(split = arg1), control = rpart.control(minbucket = arg2))
 
-# # Tests du classifieur : classe predite
-# dt_class <- predict(dt, produit_et, type="class")
+ # Tests du classifieur : classe predite
+ dt_class <- predict(dt, data_et, type="class")
 
-# # Matrice de confusion
-# print(table(produit_et$Produit, dt_class))
+ # Matrice de confusion
+ print(table(data_et$default, dt_class))
 
-# # Tests du classifieur : probabilites pour chaque prediction
-# dt_prob <- predict(dt, produit_et, type="prob")
+ # Tests du classifieur : probabilites pour chaque prediction
+ dt_prob <- predict(dt, data_et, type="prob")
 
-list("toto"=1,"tata"=c(1,2,3))
+list("prediction"=dt_class,"dataet"=data_et)
