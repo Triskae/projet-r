@@ -5,7 +5,7 @@ import ClassifierCard from "../components/ClassifierCard";
 import { useRouteMatch } from 'react-router-dom';
 
 const Predictions = () => {
-  let { path } = useRouteMatch();
+  let {path} = useRouteMatch();
 
   return (
     <div>

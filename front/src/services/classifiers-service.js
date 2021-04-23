@@ -1,26 +1,39 @@
 export const classifiers = [
   {
+    id: 'decision-tree',
     name: 'Decision Tree',
-    route: 'decision-tree'
+    form: [
+      {
+        type: 'select',
+        label: 'Variable 1',
+        options: ['A', 'B', 'C'],
+        defaultOption: 'B'
+      }
+    ]
   },
   {
+    id: 'random-forest',
     name: 'Random Forest',
-    route: 'random-forest'
+    form: []
   },
   {
+    id: 'k-nearest-neighbors',
     name: 'K-Nearest Neighbors',
-    route: 'k-nearest-neighbors'
+    form: []
   },
   {
+    id: 'support-vector-machine',
     name: 'Support Vector Machine',
-    route: 'support-vector-machine'
+    form: []
   },
   {
+    id: 'naive-bayes',
     name: 'Naive Bayes',
-    route: 'naive-bayes'
+    form: []
   },
   {
+    id: 'neural-network',
     name: 'Neural Network',
-    route: 'neural-network'
+    form: []
   }
 ]
