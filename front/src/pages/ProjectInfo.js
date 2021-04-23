@@ -1,10 +1,11 @@
 import React from 'react';
 import Card from '../components/Card';
+import PageHeader from "../components/PageHeader";
 
 const ProjectInfo = () => {
   return (
     <div>
-      <h1>Informations sur le projet</h1>
+      <PageHeader>Informations sur le projet</PageHeader>
       <Card>
         <div>
           <span>Contenu</span>

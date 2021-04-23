@@ -2,15 +2,15 @@ import './App.css';
 import { BrowserRouter as Router, NavLink, Route, Switch } from "react-router-dom";
 import { Disclosure } from '@headlessui/react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
-import React, { Fragment } from "react";
+import React from "react";
 import ProjectInfo from "./pages/ProjectInfo";
-import Dataset from "./pages/Dataset";
-import Graphs from "./pages/Graphs";
+import Predictions from "./pages/Predictions";
+import Classifier from "./pages/Classifier";
 
 const routes = [
-  {name: 'Présentation', to: '/', exact: true, page: ProjectInfo},
-  {name: 'Dataset', to: '/dataset', exact: false, page: Dataset},
-  {name: 'Graphes', to: '/graphs', exact: false, page: Graphs},
+  {name: 'Présentation', to: '/', exact: true, page: ProjectInfo, display: true},
+  {name: 'Prédictions', to: '/predictions', exact: true, page: Predictions, display: true},
+  {name: 'Classifier', to: '/predictions/:classifierId', exact: false, page: Classifier, display: false}
 ];
 
 function App() {
@@ -30,6 +30,7 @@ function App() {
                     </div>
                     <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
                       {routes.map((item) => (
+                        item.display &&
                         <NavLink
                           key={item.name}
                           to={item.to}
@@ -59,22 +60,21 @@ function App() {
 
               {/* Mobile */}
               <Disclosure.Panel className="sm:hidden">
-                {open => (
-                  <div className="pt-2 pb-3 space-y-1">
-                    {routes.map((item) => (
-                      <NavLink
-                        key={item.name}
-                        to={item.to}
-                        exact={item.exact}
-                        className={'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium'}
-                        activeClassName={'bg-blue-50 border-blue-500 text-blue-700 hover:bg-blue-50 hover:border-blue-500 hover:text-blue-700'}
-                        aria-current={item.current ? 'page' : undefined}
-                      >
-                        {item.name}
-                      </NavLink>
-                    ))}
-                  </div>
-                )}
+                <div className="pt-2 pb-3 space-y-1">
+                  {routes.map((item) => (
+                    item.display &&
+                    <NavLink
+                      key={item.name}
+                      to={item.to}
+                      exact={item.exact}
+                      className={'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium'}
+                      activeClassName={'bg-blue-50 border-blue-500 text-blue-700 hover:bg-blue-50 hover:border-blue-500 hover:text-blue-700'}
+                      aria-current={item.current ? 'page' : undefined}
+                    >
+                      {item.name}
+                    </NavLink>
+                  ))}
+                </div>
               </Disclosure.Panel>
             </>
           )}
@@ -85,15 +85,13 @@ function App() {
           <div className="py-10">
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
               <Switch>
-                <Fragment>
+                <>
                   <div className="px-4 py-4 sm:px-0">
                     {routes.map((item) =>
-                      <Route key={item.name} exact={item.exact} path={item.to}>
-                        {item.page()}
-                      </Route>
+                      <Route key={item.name} exact={item.exact} path={item.to} component={item.page}/>
                     )}
                   </div>
-                </Fragment>
+                </>
               </Switch>
             </div>
           </div>
