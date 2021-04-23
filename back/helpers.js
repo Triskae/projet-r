@@ -8,8 +8,9 @@ const Rlist_to_array = (Rlist) => [_.keys(Rlist[0]), ..._.map(Rlist, _.values)]
 
 const rScripts = {
     decisionTree: 'rpart.R',
-    randomForest: 'rf.R',
+    randomForest: 'rforest.R',
     kNearestNeighbors: 'kknn.R',
+    supportVectorMachine: 'svm.R',
 }
 
 module.exports = {

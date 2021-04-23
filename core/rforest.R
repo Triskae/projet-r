@@ -17,7 +17,7 @@ data_shuffle <- data[sample(seq_along(data[, 1])),]
 data_ea <- data_shuffle[1:800,]
 data_et <- data_shuffle[801:1200,]
 
-jpeg('rf.jpg')
+jpeg('rforest.jpg')
 
 #----------------#
 # RANDOM FORESTS #

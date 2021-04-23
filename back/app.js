@@ -15,7 +15,7 @@ app.get('/classifier/rpart', async (req, res) => {
     const inputs = {
         arg1: req.body.arg1, // "gini" || "information"
         arg2: req.body.arg2, // number ex: 5, 10, ...
-        arg4: req.body.arg3, // color ex: 'orange', 'green', 'red', 'blue', ...
+        arg3: req.body.arg3, // color ex: 'orange', 'green', 'red', 'blue', ...
     }
 
     const output = await R.execR(inputs, H.rScripts.decisionTree)
@@ -28,7 +28,7 @@ app.get('/classifier/rf', async (req, res) => {
     const inputs = {
         arg1: req.body.arg1, // number ex: 300, 500, ...
         arg2: req.body.arg2, // number ex: 3, 5, ...
-        arg4: req.body.arg3, // color ex: 'orange', 'green', 'red', 'blue', ...
+        arg3: req.body.arg3, // color ex: 'orange', 'green', 'red', 'blue', ...
     }
 
     const output = await R.execR(inputs, H.rScripts.decisionTree)
@@ -41,7 +41,7 @@ app.get('/classifier/kknn', async (req, res) => {
     const inputs = {
         arg1: req.body.arg1, // number ex: 10, 20, ...
         arg2: req.body.arg2, // number ex: 5, 10, ...
-        arg4: req.body.arg3, // color ex: 'orange', 'green', 'red', 'blue', ...
+        arg3: req.body.arg3, // color ex: 'orange', 'green', 'red', 'blue', ...
     }
 
     const output = await R.execR(inputs, H.rScripts.kNearestNeighbors)
@@ -53,8 +53,12 @@ app.get('/classifier/kknn', async (req, res) => {
 app.get('/classifier/svm', async (req, res) => {
     const inputs = {
         arg1: req.body.arg1, // "linear" || "polynomial" || "radial" || "sigmoid"
-        arg3: req.body.arg2, // color ex: "red", "blue", "green", "orange"
+        arg2: req.body.arg2, // color ex: "red", "blue", "green", "orange"
     }
+
+    const output = await R.execR(inputs, H.rScripts.supportVectorMachine)
+
+    res.send(output)
 })
 
 //naive bayes
