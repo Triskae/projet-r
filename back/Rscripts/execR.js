@@ -5,21 +5,26 @@ const H = require('../helpers')
 
 module.exports = async (inputs, rScript) => {
     const outputData = {
+        AUC: null,
         prediction: null,
         dataet: null,
+        confusionMatrix: null,
         ...(await R(core(rScript)).data(inputs).callSync()),
     }
+
+    const { AUC, prediction, dataet, confusionMatrix } = outputData
 
     const CM = {
         predictedPositive: null,
         predictedNegative: null,
-        ...outputData.confusionMatrix,
+        ...confusionMatrix,
     }
 
     return {
+        AUC: AUC,
         predicted_data: H.Rlist_to_array(
-            _.map(outputData.prediction, (x, i) => ({
-                ...outputData.dataet[i],
+            _.map(prediction, (x, i) => ({
+                ...dataet[i],
                 prediction: x,
             }))
         ),

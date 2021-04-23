@@ -31,9 +31,6 @@ test_rf <- function(arg1, arg2, arg3, arg4){
   # Test du classifeur : classe predite
   rf_class <- predict(rf,data_et, type="response")
 
-  # Matrice de confusion
-  print(table(produit_QF_ET$Produit, rf_class))
-
   # Test du classifeur : probabilites pour chaque prediction
   rf_prob <- predict(rf, data_et, type="prob")
 
@@ -45,13 +42,13 @@ test_rf <- function(arg1, arg2, arg3, arg4){
 
   # Calcul de l'AUC et affichage par la fonction cat()
   rf_auc <- performance(rf_pred, "auc")
-  cat("AUC = ", as.character(attr(rf_auc, "y.values")))
 
   confusionMatrix <- as.matrix(
     table(data_et$default, dt_class),
   )
 
-  return(list("prediction"=rf_class,
+  return(list("AUC"=as.character(attr(rf_auc, "y.values")),
+              "prediction"=rf_class,
               "dataet"=data_et,
               "confusionMatrix"=
                 list("predictedPositive"=confusionMatrix[1,]

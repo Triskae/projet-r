@@ -30,9 +30,6 @@ dt <- rpart(default~., data_ea, parms = list(split = arg1), control = rpart.cont
  # Tests du classifieur : classe predite
  dt_class <- predict(dt, data_et, type="class")
 
- # Matrice de confusion
- print(table(data_et$default, dt_class))
-
  # Tests du classifieur : probabilites pour chaque prediction
  dt_prob <- predict(dt, data_et, type="prob")
 
@@ -44,13 +41,13 @@ plot(dt_perf, main = "Arbres de décision rpart()", add = arg3, col = arg4)
 
 # Calcul de l'AUC et affichage par la fonction cat()
 dt_auc <- performance(dt_pred, "auc")
-cat("AUC = ", as.character(attr(dt_auc, "y.values")))
 
  confusionMatrix <- as.matrix(
    table(data_et$default, dt_class),
  )
 
- return(list("prediction"=dt_class,
+ return(list("AUC"=as.character(attr(dt_auc, "y.values")),
+             "prediction"=dt_class,
              "dataet"=data_et,
              "confusionMatrix"=
                list("predictedPositive"=confusionMatrix[1,]

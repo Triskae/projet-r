@@ -39,7 +39,7 @@ app.get('/classifier/rf', async (req, res) => {
 })
 
 //k nearest neighbors
-app.get('/classifier/knn', async (req, res) => {
+app.get('/classifier/kknn', async (req, res) => {
     const inputs = {
         arg1: req.body.arg1, // number ex: 10, 20, ...
         arg2: req.body.arg2, // number ex: 5, 10, ...
