@@ -1,5 +1,14 @@
 const R = require('./Rscripts')
 const app = require('./server')
+const H = require('./helpers')
+
+const datasetPath = './data/dataset.csv'
+
+app.get('/dataset', async (req, res) => {
+    const dataset = await H.getDataset()
+
+    res.json(H.Rlist_to_array(dataset))
+})
 
 //for decision tree
 app.get('/classifier/rpart', async (req, res) => {
