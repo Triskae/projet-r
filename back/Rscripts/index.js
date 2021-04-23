@@ -1,3 +1,3 @@
 module.exports = {
-    rpart: require('./rpart'),
+    execR: require('./execR'),
 }

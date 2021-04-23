@@ -3,11 +3,11 @@ const R = require('r-script')
 const core = require('./core')
 const H = require('../helpers')
 
-module.exports = async (inputs) => {
+module.exports = async (inputs, rScript) => {
     const outputData = {
         prediction: null,
         dataet: null,
-        ...(await R(core('rpart.R')).data(inputs).callSync()),
+        ...(await R(core(rScript)).data(inputs).callSync()),
     }
 
     const CM = {

@@ -19,7 +19,7 @@ app.get('/classifier/rpart', async (req, res) => {
         arg4: req.body.arg4, // color ex: 'orange', 'green', 'red', 'blue', ...
     }
 
-    const output = await R.rpart(inputs)
+    const output = await R.execR(inputs, H.rScripts.decisionTree)
 
     res.send(output)
 })
@@ -32,6 +32,10 @@ app.get('/classifier/rf', async (req, res) => {
         arg3: req.body.arg3, // boolean
         arg4: req.body.arg4, // color ex: 'orange', 'green', 'red', 'blue', ...
     }
+
+    const output = await R.execR(inputs, H.rScripts.decisionTree)
+
+    res.send(output)
 })
 
 //k nearest neighbors
@@ -42,6 +46,10 @@ app.get('/classifier/knn', async (req, res) => {
         arg3: req.body.arg3, // boolean
         arg4: req.body.arg4, // color ex: 'orange', 'green', 'red', 'blue', ...
     }
+
+    const output = await R.execR(inputs, H.rScripts.kNearestNeighbors)
+
+    res.send(output)
 })
 
 //support vector machine
