@@ -24,7 +24,7 @@ jpeg('rpart.jpg')
 #-------------------------#
 
 # Apprentissage du classifeur
-test_rpart <- function(arg1, arg2, arg3, arg4){
+test_rpart <- function(arg1, arg2, arg3){
 dt <- rpart(default~., data_ea, parms = list(split = arg1), control = rpart.control(minbucket = arg2))
 
  # Tests du classifieur : classe predite
@@ -36,7 +36,7 @@ dt <- rpart(default~., data_ea, parms = list(split = arg1), control = rpart.cont
 # Courbes ROC
 dt_pred <- prediction(dt_prob[,2], data_et$default)
 dt_perf <- performance(dt_pred,"tpr","fpr")
-plot(dt_perf, main = "Arbres de décision rpart()", add = arg3, col = arg4)
+plot(dt_perf, main = "Arbres de décision rpart()", add = FALSE, col = arg3)
  dev.off()
 
 # Calcul de l'AUC et affichage par la fonction cat()
@@ -56,5 +56,5 @@ dt_auc <- performance(dt_pred, "auc")
 }
 
 
-test_rpart(arg1,arg2,arg3,arg4)
+test_rpart(arg1,arg2,arg3)
 

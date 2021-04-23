@@ -23,15 +23,15 @@ jpeg('kknn.jpg')
 # K-NEAREST NEIGHBORS #
 #---------------------#
 
-test_knn <- function(arg1, arg2, arg3, arg4){
+test_knn <- function(arg1, arg2, arg3){
   # Apprentissage et test simultanes du classifeur de type k-nearest neighbors
   knn <- kknn(default~., data_ea, data_et, k = arg1, distance = arg2)
 
   # Courbe ROC
   knn_pred <- prediction(knn$prob[,2], data_et$default)
   knn_perf <- performance(knn_pred,"tpr","fpr")
-  plot(knn_perf, main = "Classifeurs K-plus-proches-voisins kknn()", add = arg3, col = arg4)
-  dev.off()
+  plot(knn_perf, main = "Classifeurs K-plus-proches-voisins kknn()", add = FALSE, col = arg3)
+    dev.off()
 
   # Calcul de l'AUC et affichage par la fonction cat()
   knn_auc <- performance(knn_pred, "auc")
@@ -49,4 +49,4 @@ test_knn <- function(arg1, arg2, arg3, arg4){
   ))
 }
 
-test_knn(arg1,arg2,arg3,arg4)
+test_knn(arg1,arg2,arg3)
