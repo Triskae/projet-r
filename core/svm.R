@@ -20,7 +20,6 @@ data_et <- data_shuffle[801:1200,]
 
 jpeg('svm.jpg')
 
-
 #-------------------------#
 # SUPPORT VECTOR MACHINES #
 #-------------------------#
@@ -49,7 +48,7 @@ test_svm <- function(arg1, arg2){
   svm_auc <- performance(svm_pred, "auc")
 
   confusionMatrix <- as.matrix(
-    table(table(data_et$default, svm_class)),
+    table(data_et$default, svm_class),
   )
 
   return(list("AUC"=as.character(attr(svm_auc, "y.values")),
@@ -61,3 +60,5 @@ test_svm <- function(arg1, arg2){
   ))
 
 }
+
+test_svm(arg1,arg2)

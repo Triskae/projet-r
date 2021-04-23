@@ -47,6 +47,7 @@ test_knn <- function(arg1, arg2, arg3){
                 list("predictedPositive"=confusionMatrix[1,]
                   ,"predictedNegative"=confusionMatrix[2,])
   ))
+
 }
 
 test_knn(arg1,arg2,arg3)
