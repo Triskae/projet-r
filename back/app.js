@@ -47,18 +47,17 @@ app.get('/classifier/knn', async (req, res) => {
 //support vector machine
 app.get('/classifier/svm', async (req, res) => {
     const inputs = {
-        arg1: req.body.arg1, // "gini" || "information"
-        arg2: req.body.arg2, // number ex: 5, 10, ...
-        arg3: req.body.arg3, // boolean
-        arg4: req.body.arg4, // color ex: 'orange', 'green', 'red', 'blue', ...
+        arg1: req.body.arg1, // "linear" || "polynomial" || "radial" || "sigmoid"
+        arg2: req.body.arg2, // boolean
+        arg3: req.body.arg3, // color ex: "red", "blue", "green", "orange"
     }
 })
 
 //naive bayes
 app.get('/classifier/nb', async (req, res) => {
     const inputs = {
-        arg1: req.body.arg1, // "gini" || "information"
-        arg2: req.body.arg2, // number ex: 5, 10, ...
+        arg1: req.body.arg1, // number ex: 0, 20, ...
+        arg2: req.body.arg2, // boolean
         arg3: req.body.arg3, // boolean
         arg4: req.body.arg4, // color ex: 'orange', 'green', 'red', 'blue', ...
     }
@@ -67,9 +66,10 @@ app.get('/classifier/nb', async (req, res) => {
 //neural network
 app.get('/classifier/nn', async (req, res) => {
     const inputs = {
-        arg1: req.body.arg1, // "gini" || "information"
-        arg2: req.body.arg2, // number ex: 5, 10, ...
-        arg3: req.body.arg3, // boolean
-        arg4: req.body.arg4, // color ex: 'orange', 'green', 'red', 'blue', ...
+        arg1: req.body.arg1, // number ex: 25, 50, ...
+        arg2: req.body.arg2, // number ex: 0.01, 0.001, ...
+        arg3: req.body.arg3, // number ex: 100, 300, ...
+        arg5: req.body.arg4, // boolean
+        arg4: req.body.arg5, // color ex: 'orange', 'green', 'red', 'blue','tomato', ...
     }
 })
