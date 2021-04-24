@@ -71,6 +71,7 @@ app.get('/classifier/svm', async (req, res) => {
     }
 
     try {
+        console.log('reached')
         const output = await R.execR(inputs, H.rScripts.supportVectorMachine)
         console.log('reached')
         res.send(output)
