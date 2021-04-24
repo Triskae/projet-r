@@ -7,7 +7,12 @@ const datasetPath = './data/dataset.csv'
 app.get('/dataset', async (req, res) => {
     const dataset = await H.getDataset()
 
-    res.json(H.Rlist_to_array(dataset))
+    try {
+        res.json(H.Rlist_to_array(dataset))
+    }
+    catch (e) {
+        res.error(e);
+    }
 })
 
 //for decision tree
@@ -18,9 +23,13 @@ app.get('/classifier/rpart', async (req, res) => {
         arg3: req.body.arg3, // color ex: 'orange', 'green', 'red', 'blue', ...
     }
 
-    const output = await R.execR(inputs, H.rScripts.decisionTree)
-
-    res.send(output)
+    try {
+        const output = await R.execR(inputs, H.rScripts.decisionTree)
+        res.send(output)
+    }
+    catch (e) {
+        res.error(e)
+    }
 })
 
 //for random forest
@@ -31,9 +40,13 @@ app.get('/classifier/rf', async (req, res) => {
         arg3: req.body.arg3, // color ex: 'orange', 'green', 'red', 'blue', ...
     }
 
-    const output = await R.execR(inputs, H.rScripts.decisionTree)
-
-    res.send(output)
+    try {
+        const output = await R.execR(inputs, H.rScripts.decisionTree)
+        res.send(output)
+    }
+    catch (e) {
+        res.error(e)
+    }
 })
 
 //k nearest neighbors
@@ -44,9 +57,13 @@ app.get('/classifier/kknn', async (req, res) => {
         arg3: req.body.arg3, // color ex: 'orange', 'green', 'red', 'blue', ...
     }
 
-    const output = await R.execR(inputs, H.rScripts.kNearestNeighbors)
-
-    res.send(output)
+    try {
+        const output = await R.execR(inputs, H.rScripts.kNearestNeighbors)
+        res.send(output)
+    }
+    catch (e) {
+        res.error(e)
+    }
 })
 
 //support vector machine
@@ -56,9 +73,14 @@ app.get('/classifier/svm', async (req, res) => {
         arg2: req.body.arg2, // color ex: "red", "blue", "green", "orange"
     }
 
-    const output = await R.execR(inputs, H.rScripts.supportVectorMachine)
+    try {
+        const output = await R.execR(inputs, H.rScripts.supportVectorMachine)
+        res.send(output)
+    }
+    catch (e) {
+        res.error(e)
+    }
 
-    res.send(output)
 })
 
 //naive bayes
