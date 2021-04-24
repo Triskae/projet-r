@@ -24,6 +24,7 @@ app.get('/classifier/rpart', async (req, res) => {
         const output = await R.execR(inputs, H.rScripts.decisionTree)
         res.send(output)
     } catch (e) {
+        console.log(e)
         res.status(500).send('Something broke!')
     }
 })
@@ -40,6 +41,7 @@ app.get('/classifier/rf', async (req, res) => {
         const output = await R.execR(inputs, H.rScripts.decisionTree)
         res.send(output)
     } catch (e) {
+        console.log(e)
         res.status(500).send('Something broke!')
     }
 })
@@ -56,6 +58,7 @@ app.get('/classifier/kknn', async (req, res) => {
         const output = await R.execR(inputs, H.rScripts.kNearestNeighbors)
         res.send(output)
     } catch (e) {
+        console.log(e)
         res.status(500).send('Something broke!')
     }
 })
@@ -72,6 +75,7 @@ app.get('/classifier/svm', async (req, res) => {
         console.log('reached')
         res.send(output)
     } catch (e) {
+        console.log(e)
         res.status(500).send('Something broke!')
     }
 })
