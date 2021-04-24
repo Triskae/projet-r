@@ -1,14 +1,15 @@
-import React from "react";
-import classNames from "classnames";
+import React from 'react';
+import classNames from 'classnames';
 
 type TableProps = {
+  className?: string,
   headers: string[],
   children: React.ReactNode,
   [prop: string]: any
-}
+};
 
-const Table = ({headers, children, ...props}: TableProps) => {
-  const tableClasses = classNames("flex flex-col", props.className)
+const Table = ({ headers, children, ...props }: TableProps) => {
+  const tableClasses = classNames('flex flex-col', props.className);
 
   return (
     <div className={tableClasses}>
@@ -17,16 +18,16 @@ const Table = ({headers, children, ...props}: TableProps) => {
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
-              <tr>
-                {headers.map(header => (
-                  <th key={header} scope="col">
-                    {header}
-                  </th>
-                ))}
-              </tr>
+                <tr>
+                  {headers.map((header) => (
+                    <th key={header} scope="col">
+                      {header}
+                    </th>
+                  ))}
+                </tr>
               </thead>
               <tbody>
-              {children}
+                {children}
               </tbody>
             </table>
           </div>
@@ -34,6 +35,10 @@ const Table = ({headers, children, ...props}: TableProps) => {
       </div>
     </div>
   );
+};
+
+Table.defaultProps = {
+  className: null
 };
 
 export default Table;
