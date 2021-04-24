@@ -1,11 +1,25 @@
 import { Classifier } from "../models/Classifier";
 import {
   BooleanParam,
-  NumberParam,
-  ParamType,
+  ParamType, RangeParam,
   SelectParam,
   SelectParamOption
 } from "../models/ClassifierParam";
+
+const curveColorsSelect = {
+  type: ParamType.SELECT,
+  label: 'Couleur de la courbe',
+  options: [
+    {label: 'Marron', value: 'burlywood4'},
+    {label: 'Vert lagon', value: 'aquamarine'},
+    {label: 'Bleu', value: 'blue'},
+    {label: 'Jaune', value: 'darkgoldenrod1'},
+    {label: 'Gris taupe', value: 'mistyrose4'},
+    {label: 'Noir', value: 'black'},
+    {label: 'Violet', value: 'purple'},
+    {label: 'Orange', value: 'orange'},
+  ] as SelectParamOption[],
+} as SelectParam;
 
 const classifiers = [
   {
@@ -21,24 +35,13 @@ const classifiers = [
         ] as SelectParamOption[],
       } as SelectParam,
       arg2: {
-        type: ParamType.NUMBER,
-        label: 'Nombre',
-        placeholder: '5, 10, 15, ...'
-      } as NumberParam,
-      arg3: {
-        type: ParamType.SELECT,
-        label: 'Couleur',
-        options: [
-          {label: 'Rouge', value: 'red'},
-          {label: 'Vert', value: 'green'},
-          {label: 'Bleu', value: 'blue'},
-          {label: 'Jaune', value: 'Yellow'},
-          {label: 'Blanc', value: 'white'},
-          {label: 'Noir', value: 'black'},
-          {label: 'Violet', value: 'purple'},
-          {label: 'Orange', value: 'orange'},
-        ] as SelectParamOption[],
-      } as SelectParam
+        type: ParamType.RANGE,
+        label: 'Distance',
+        min: 0,
+        max: 20,
+        step: 0.1
+      } as RangeParam,
+      arg3: curveColorsSelect
     }
   },
   {
@@ -46,29 +49,20 @@ const classifiers = [
     name: 'Random Forest',
     params: {
       arg1: {
-        type: ParamType.NUMBER,
-        label: 'Nombre',
-        placeholder: '300, 500, 700, ...'
-      } as NumberParam,
+        type: ParamType.RANGE,
+        label: `Nombre d'arbres`,
+        min: 0,
+        max: 500,
+        step: 1
+      } as RangeParam,
       arg2: {
-        type: ParamType.NUMBER,
-        label: 'Nombre',
-        placeholder: '3, 5, 7, ...'
-      } as NumberParam,
-      arg3: {
-        type: ParamType.SELECT,
-        label: 'Couleur',
-        options: [
-          {label: 'Rouge', value: 'red'},
-          {label: 'Vert', value: 'green'},
-          {label: 'Bleu', value: 'blue'},
-          {label: 'Jaune', value: 'Yellow'},
-          {label: 'Blanc', value: 'white'},
-          {label: 'Noir', value: 'black'},
-          {label: 'Violet', value: 'purple'},
-          {label: 'Orange', value: 'orange'},
-        ] as SelectParamOption[],
-      } as SelectParam
+        type: ParamType.RANGE,
+        label: `Nombre de variables testées`,
+        min: 0,
+        max: 10,
+        step: 0.1
+      } as RangeParam,
+      arg3: curveColorsSelect
     }
   },
   {
@@ -76,29 +70,20 @@ const classifiers = [
     name: 'K-Nearest Neighbors',
     params: {
       arg1: {
-        type: ParamType.NUMBER,
-        label: 'Nombre',
-        placeholder: '10, 20, 30, ...'
-      } as NumberParam,
+        type: ParamType.RANGE,
+        label: 'Nombre de voisins',
+        min: 0,
+        max: 20,
+        step: 0.1
+      } as RangeParam,
       arg2: {
-        type: ParamType.NUMBER,
-        label: 'Nombre',
-        placeholder: '5, 10, 15, ...'
-      } as NumberParam,
-      arg3: {
-        type: ParamType.SELECT,
-        label: 'Couleur',
-        options: [
-          {label: 'Rouge', value: 'red'},
-          {label: 'Vert', value: 'green'},
-          {label: 'Bleu', value: 'blue'},
-          {label: 'Jaune', value: 'Yellow'},
-          {label: 'Blanc', value: 'white'},
-          {label: 'Noir', value: 'black'},
-          {label: 'Violet', value: 'purple'},
-          {label: 'Orange', value: 'orange'},
-        ] as SelectParamOption[],
-      } as SelectParam
+        type: ParamType.RANGE,
+        label: 'Distance de Minkowski',
+        min: 0,
+        max: 10,
+        step: 0.1
+      } as RangeParam,
+      arg3: curveColorsSelect
     }
   },
   {
@@ -115,20 +100,7 @@ const classifiers = [
           {label: 'Sigmoïde', value: 'sigmoid'}
         ] as SelectParamOption[],
       } as SelectParam,
-      arg2: {
-        type: ParamType.SELECT,
-        label: 'Couleur',
-        options: [
-          {label: 'Rouge', value: 'red'},
-          {label: 'Vert', value: 'green'},
-          {label: 'Bleu', value: 'blue'},
-          {label: 'Jaune', value: 'Yellow'},
-          {label: 'Blanc', value: 'white'},
-          {label: 'Noir', value: 'black'},
-          {label: 'Violet', value: 'purple'},
-          {label: 'Orange', value: 'orange'},
-        ] as SelectParamOption[],
-      } as SelectParam
+      arg2: curveColorsSelect
     }
   },
   {
@@ -136,32 +108,17 @@ const classifiers = [
     name: 'Naive Bayes',
     params: {
       arg1: {
-        type: ParamType.NUMBER,
-        label: 'Nombre',
-        placeholder: '0, 20, 40, ...'
-      } as NumberParam,
+        type: ParamType.RANGE,
+        label: 'Estimateur de Laplace',
+        min: 0,
+        max: 20,
+        step: 0.1
+      } as RangeParam,
       arg2: {
         type: ParamType.BOOLEAN,
-        label: 'Checkbox'
+        label: 'Utiliser le noyau'
       } as BooleanParam,
-      arg3: {
-        type: ParamType.BOOLEAN,
-        label: 'Checkbox'
-      } as BooleanParam,
-      arg4: {
-        type: ParamType.SELECT,
-        label: 'Couleur',
-        options: [
-          {label: 'Rouge', value: 'red'},
-          {label: 'Vert', value: 'green'},
-          {label: 'Bleu', value: 'blue'},
-          {label: 'Jaune', value: 'Yellow'},
-          {label: 'Blanc', value: 'white'},
-          {label: 'Noir', value: 'black'},
-          {label: 'Violet', value: 'purple'},
-          {label: 'Orange', value: 'orange'},
-        ] as SelectParamOption[],
-      } as SelectParam
+      arg3: curveColorsSelect
     }
   },
   {
@@ -169,34 +126,27 @@ const classifiers = [
     name: 'Neural Network',
     params: {
       arg1: {
-        type: ParamType.NUMBER,
-        label: 'Nombre',
-        placeholder: '25, 50, 75, ...'
-      } as NumberParam,
+        type: ParamType.RANGE,
+        label: 'Taille',
+        min: 0,
+        max: 100,
+        step: 1
+      } as RangeParam,
       arg2: {
-        type: ParamType.NUMBER,
-        label: 'Nombre',
-        placeholder: '0.01, 0.001, 0.0001, ...'
-      } as NumberParam,
+        type: ParamType.RANGE,
+        label: 'Decay',
+        min: 0,
+        max: 1,
+        step: 0.0001
+      } as RangeParam,
       arg3: {
-        type: ParamType.NUMBER,
-        label: 'Nombre',
-        placeholder: '100, 300, 500, ...'
-      } as NumberParam,
-      arg4: {
-        type: ParamType.SELECT,
-        label: 'Couleur',
-        options: [
-          {label: 'Rouge', value: 'red'},
-          {label: 'Vert', value: 'green'},
-          {label: 'Bleu', value: 'blue'},
-          {label: 'Jaune', value: 'Yellow'},
-          {label: 'Blanc', value: 'white'},
-          {label: 'Noir', value: 'black'},
-          {label: 'Violet', value: 'purple'},
-          {label: 'Orange', value: 'orange'},
-        ] as SelectParamOption[],
-      } as SelectParam
+        type: ParamType.RANGE,
+        label: `Nombre d'itérations`,
+        min: 0,
+        max: 500,
+        step: 1
+      } as RangeParam,
+      arg4: curveColorsSelect
     }
   }
 ] as Classifier[];
@@ -204,8 +154,11 @@ const classifiers = [
 export function getClassifierDefaultFormData(classifier: Classifier): Record<string, string> {
   let classifierFormData = {} as Record<string, any>;
   for (let key of Object.keys(classifier.params)) {
-    if (classifier.params[key].type === ParamType.BOOLEAN) {
+    const foundClassifier = classifier.params[key];
+    if (foundClassifier.type === ParamType.BOOLEAN) {
       classifierFormData[key] = false;
+    } else if (foundClassifier.type === ParamType.RANGE) {
+      classifierFormData[key] = foundClassifier.max - ((foundClassifier.max - foundClassifier.min) / 2);
     } else {
       classifierFormData[key] = '';
     }

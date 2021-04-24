@@ -14,6 +14,12 @@ module.exports = {
       height: {
         'fit': 'fit-content'
       },
+      inset: {
+        '2.5': '0.625rem'
+      },
+      cursor: {
+        'grab': 'grab'
+      }
     },
   },
   variants: {
