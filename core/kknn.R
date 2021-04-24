@@ -2,7 +2,7 @@
 # ACTIVATION DES LIRAIRIES NECESSAIRES #
 #--------------------------------------#
 attach(input[[1]])
-needs("kknn")
+needs(kknn)
 needs(ROCR)
 
 #-------------------------#
