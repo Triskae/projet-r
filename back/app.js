@@ -8,7 +8,7 @@ app.get('/dataset', async (req, res) => {
     try {
         res.json(H.Rlist_to_array(dataset))
     } catch (e) {
-        res.error(e)
+        res.error()
     }
 })
 
