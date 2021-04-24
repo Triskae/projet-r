@@ -24,7 +24,7 @@ app.get('/classifier/rpart', async (req, res) => {
         const output = await R.execR(inputs, H.rScripts.decisionTree)
         res.send(output)
     } catch (e) {
-        res.error(e)
+        res.error()
     }
 })
 
@@ -40,7 +40,7 @@ app.get('/classifier/rf', async (req, res) => {
         const output = await R.execR(inputs, H.rScripts.decisionTree)
         res.send(output)
     } catch (e) {
-        res.error(e)
+        res.error()
     }
 })
 
@@ -56,7 +56,7 @@ app.get('/classifier/kknn', async (req, res) => {
         const output = await R.execR(inputs, H.rScripts.kNearestNeighbors)
         res.send(output)
     } catch (e) {
-        res.error(e)
+        res.error()
     }
 })
 
@@ -71,7 +71,7 @@ app.get('/classifier/svm', async (req, res) => {
         const output = await R.execR(inputs, H.rScripts.supportVectorMachine)
         res.send(output)
     } catch (e) {
-        res.error(e)
+        res.error()
     }
 })
 
