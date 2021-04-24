@@ -2,8 +2,6 @@ const R = require('./Rscripts')
 const app = require('./server')
 const H = require('./helpers')
 
-const datasetPath = './data/dataset.csv'
-
 app.get('/dataset', async (req, res) => {
     const dataset = await H.getDataset()
 
@@ -66,17 +64,23 @@ app.get('/classifier/nb', async (req, res) => {
     const inputs = {
         arg1: req.body.arg1, // number ex: 0, 20, ...
         arg2: req.body.arg2, // boolean
-        arg3: req.body.arg3, // boolean
-        arg4: req.body.arg4, // color ex: 'orange', 'green', 'red', 'blue', ...
+        arg3: req.body.arg3, // color ex: 'orange', 'green', 'red', 'blue', ...
     }
+    const output = await R.execR(inputs, H.rScripts.naiveBayes)
+
+    res.send(output)
 })
 
 //neural network
-app.get('/classifier/nn', async (req, res) => {
+app.get('/classifier/nnet', async (req, res) => {
     const inputs = {
         arg1: req.body.arg1, // number ex: 25, 50, ...
         arg2: req.body.arg2, // number ex: 0.01, 0.001, ...
         arg3: req.body.arg3, // number ex: 100, 300, ...
         arg4: req.body.arg4, // color ex: 'orange', 'green', 'red', 'blue','tomato', ...
     }
+
+    const output = await R.execR(inputs, H.rScripts.neuralNetwork)
+
+    res.send(output)
 })
