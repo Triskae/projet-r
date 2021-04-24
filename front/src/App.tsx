@@ -1,17 +1,17 @@
 import './App.css';
-import { BrowserRouter as Router, NavLink, Route, Switch } from "react-router-dom";
-import { Disclosure } from '@headlessui/react';
-import { MenuIcon, XIcon } from '@heroicons/react/outline';
-import React from "react";
+import {BrowserRouter as Router, NavLink, Route, Switch} from "react-router-dom";
+import {Disclosure} from '@headlessui/react';
+import {MenuIcon, XIcon} from '@heroicons/react/outline';
 import ProjectInfo from "./pages/ProjectInfo";
 import Predictions from "./pages/Predictions";
 import Classifier from "./pages/Classifier";
+import {RouteItem} from './models/RouteItem';
 
 const routes = [
   {name: 'Présentation', to: '/', exact: true, page: ProjectInfo, display: true},
   {name: 'Prédictions', to: '/predictions', exact: true, page: Predictions, display: true},
   {name: 'Classifier', to: '/predictions/:classifierId', exact: false, page: Classifier, display: false}
-];
+] as RouteItem[];
 
 function App() {
   return (
@@ -69,7 +69,6 @@ function App() {
                       exact={item.exact}
                       className={'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium'}
                       activeClassName={'bg-blue-50 border-blue-500 text-blue-700 hover:bg-blue-50 hover:border-blue-500 hover:text-blue-700'}
-                      aria-current={item.current ? 'page' : undefined}
                     >
                       {item.name}
                     </NavLink>
