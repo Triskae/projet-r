@@ -55,8 +55,10 @@ app.get('/classifier/kknn', async (req, res) => {
     }
 
     try {
+        console.log('reached')
         const output = await R.execR(inputs, H.rScripts.kNearestNeighbors)
         res.send(output)
+        console.log('reached')
     } catch (e) {
         console.log(e)
         res.status(500).send('Something broke!')
@@ -71,9 +73,7 @@ app.get('/classifier/svm', async (req, res) => {
     }
 
     try {
-        console.log('reached')
         const output = await R.execR(inputs, H.rScripts.supportVectorMachine)
-        console.log('reached')
         res.send(output)
     } catch (e) {
         console.log(e)
