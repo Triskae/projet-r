@@ -18,7 +18,6 @@ const rScripts = {
 
 const base64Encode = (fileName) => {
     const bitmap = fs.readFileSync('./images/' + fileName + '.jpg')
-    console.log(new Buffer(bitmap).toString('base64'))
     return new Buffer(bitmap).toString('base64')
 }
 
