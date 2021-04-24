@@ -16,6 +16,9 @@ module.exports = {
       },
       inset: {
         '2.5': '0.625rem'
+      },
+      cursor: {
+        'grab': 'grab'
       }
     },
   },
