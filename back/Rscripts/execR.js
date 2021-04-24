@@ -9,10 +9,13 @@ module.exports = async (inputs, rScript) => {
         prediction: null,
         dataet: null,
         confusionMatrix: null,
-        ...(await R(core(rScript)).data(inputs).callSync()),
+        image: null,
+        ...(await R(core(rScript + '.R')).data(inputs).callSync()),
     }
 
-    const { AUC, prediction, dataet, confusionMatrix } = outputData
+    outputData.image = await H.base64Encode(rScript)
+
+    const { AUC, prediction, dataet, confusionMatrix, image } = outputData
 
     const CM = {
         predictedPositive: null,
@@ -22,6 +25,7 @@ module.exports = async (inputs, rScript) => {
 
     return {
         AUC: AUC,
+        image,
         predicted_data: H.Rlist_to_array(
             _.map(prediction, (x, i) => ({
                 ...dataet[i],

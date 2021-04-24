@@ -13,7 +13,7 @@
         "cors": "^2.8.5"
     },
     "scripts": {
-        "start": "nodemon app.js",
+        "start": "nodemon app.js --ignore images",
         "deploy": "pm2 start ecosystem.config.js"
     }
 }
