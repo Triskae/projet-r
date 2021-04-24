@@ -2,7 +2,7 @@ import Card from "../components/Card";
 import { useParams } from 'react-router-dom';
 import PageHeader from "../components/PageHeader";
 import { getClassifier, getClassifierDefaultFormData } from "../services/classifiers-service";
-import { BooleanParam, NumberParam, ParamType, SelectParam, TextParam } from "../models/ClassifierParam";
+import { BooleanParam, NumberParam, ParamType, RangeParam, SelectParam, TextParam } from "../models/ClassifierParam";
 import { useEffect, useState } from "react";
 import * as Yup from 'yup';
 import Form, { REQUIRED_FORM_FIELD_MESSAGE } from "../components/form/Form";
@@ -11,6 +11,7 @@ import SelectField from "../components/form/SelectField";
 import Table from "../components/Table";
 import Button from "../components/Button";
 import CheckboxField from "../components/form/CheckboxField";
+import RangeField from "../components/form/RangeField";
 
 interface ParamTypes {
   classifierId: string;
@@ -26,7 +27,7 @@ const Classifier = () => {
     initValidationSchemaForm(classifier.params);
   }, [classifier]);
 
-  const initValidationSchemaForm = (form: Record<string, SelectParam | TextParam | NumberParam | BooleanParam>) => {
+  const initValidationSchemaForm = (form: Record<string, SelectParam | TextParam | NumberParam | BooleanParam | RangeParam>) => {
     let _classifierValidationSchema = {} as Record<string, any>;
 
     for (let key of Object.keys(form)) {
@@ -54,12 +55,15 @@ const Classifier = () => {
     setClassifierValidationSchema(Yup.object().shape({..._classifierValidationSchema}));
   }
 
-  const getFormElement = (elName: string, elSchema: SelectParam | TextParam | NumberParam | BooleanParam) => {
+  const getFormElement = (elName: string, elSchema: SelectParam | TextParam | NumberParam | BooleanParam | RangeParam) => {
     const props = {
       name: elName,
       label: elSchema.label,
       options: (elSchema as SelectParam).options,
-      placeholder: (elSchema as TextParam | NumberParam).placeholder
+      placeholder: (elSchema as TextParam | NumberParam).placeholder,
+      min: (elSchema as RangeParam).min,
+      max: (elSchema as RangeParam).max,
+      step: (elSchema as RangeParam).step
     };
 
     switch (elSchema.type) {
@@ -71,6 +75,8 @@ const Classifier = () => {
         return <TextField label={props.label} type="number" name={props.name} placeholder={props.placeholder}/>;
       case ParamType.BOOLEAN:
         return <CheckboxField label={props.label} name={props.name}/>;
+      case ParamType.RANGE:
+        return <RangeField label={props.label} name={props.name} min={props.min} max={props.max} step={props.step}/>;
       default:
         return null;
     }

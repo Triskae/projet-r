@@ -2,7 +2,8 @@ export enum ParamType {
   SELECT,
   TEXT,
   NUMBER,
-  BOOLEAN
+  BOOLEAN,
+  RANGE
 }
 
 export interface SelectParamOption {
@@ -33,4 +34,11 @@ export interface NumberParam extends ClassifierParam {
 
 export interface BooleanParam extends ClassifierParam {
   type: ParamType.BOOLEAN;
+}
+
+export interface RangeParam extends ClassifierParam {
+  type: ParamType.RANGE;
+  min: number;
+  max: number;
+  step: number;
 }
