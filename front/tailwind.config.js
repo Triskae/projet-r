@@ -8,6 +8,9 @@ module.exports = {
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
+      width: {
+        'fit': 'fit-content'
+      },
       height: {
         'fit': 'fit-content'
       },

@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArrowLeftIcon } from "@heroicons/react/solid";
 import { useHistory } from 'react-router-dom';
 
