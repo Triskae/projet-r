@@ -23,23 +23,9 @@
   "rules": {
     "object-curly-newline": "off",
     "react/jsx-props-no-spreading": "off",
-    "@typescript-eslint/comma-dangle": "off"
-    /*"object-curly-newline": "off",
-    "react/jsx-props-no-spreading": "off",
-    "react/jsx-filename-extension": [
-      2,
-      {
-        "extensions": [
-          ".js",
-          ".jsx",
-          ".ts",
-          ".tsx"
-        ]
-      }
-    ],
-    "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": [
-      "error"
-    ]*/
+    "@typescript-eslint/comma-dangle": "off",
+    "prefer-destructuring": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "no-return-assign": "off"
   }
 }

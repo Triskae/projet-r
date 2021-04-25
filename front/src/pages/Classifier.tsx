@@ -15,10 +15,12 @@ import {
 import Form, { REQUIRED_FORM_FIELD_MESSAGE } from '../components/form/Form';
 import TextField from '../components/form/TextField';
 import SelectField from '../components/form/SelectField';
-import Table from '../components/Table';
+import DatasetTable from '../components/dataset-table/DatasetTable';
 import Button from '../components/Button';
 import CheckboxField from '../components/form/CheckboxField';
 import RangeField from '../components/form/RangeField';
+import getDataset from '../services/dataset.service';
+import { Dataset } from '../models/Dataset';
 
 interface ParamTypes {
   classifierId: string;
@@ -32,6 +34,8 @@ const Classifier = () => {
     classifierValidationSchema,
     setClassifierValidationSchema
   ] = useState({} as Record<string, any>);
+  const [dataset, setDataset] = useState({ headers: [], data: [] } as Dataset);
+  const [fetchingDataset, setFetchingDataset] = useState(false);
 
   const initValidationSchemaForm = (form: Record<string, ClassifierParam>) => {
     const finalClassifierValidationSchema = {} as Record<string, any>;
@@ -63,6 +67,14 @@ const Classifier = () => {
   };
 
   useEffect(() => {
+    async function fetchDataset() {
+      setFetchingDataset(true);
+      const fetchedDataset = await getDataset();
+      setFetchingDataset(false);
+      setDataset(fetchedDataset);
+    }
+
+    fetchDataset();
     initValidationSchemaForm(classifier.params);
   }, [classifier]);
 
@@ -125,16 +137,16 @@ const Classifier = () => {
       <Card>
         <div>
           <h2>Rappel du dataset</h2>
-          <Table headers={['Donnée A', 'Donnée B']} className="pb-6">
-            <tr>
-              <td>Valeur 1</td>
-              <td>Valeur 2</td>
-            </tr>
-            <tr>
-              <td>Valeur 3</td>
-              <td>Valeur 4</td>
-            </tr>
-          </Table>
+          {!fetchingDataset && (
+            <DatasetTable
+              height={560}
+              width="100%"
+              itemCount={dataset.data.length}
+              itemSize={52}
+              headers={dataset.headers}
+              rows={dataset.data}
+            />
+          )}
           <h2>Choix des variables</h2>
           <Form
             initialValues={classifierFormData}
