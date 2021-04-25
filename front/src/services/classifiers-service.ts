@@ -24,7 +24,7 @@ const curveColorsSelect = {
 const classifiers = [
   {
     id: 'decision-tree',
-    name: 'Decision Tree',
+    name: 'Arbre de décisions',
     params: {
       arg1: {
         type: ParamType.SELECT,
@@ -46,7 +46,7 @@ const classifiers = [
   },
   {
     id: 'random-forest',
-    name: 'Random Forest',
+    name: 'Forêt d\'arbres décisionnels',
     params: {
       arg1: {
         type: ParamType.RANGE,
@@ -67,7 +67,7 @@ const classifiers = [
   },
   {
     id: 'k-nearest-neighbors',
-    name: 'K-Nearest Neighbors',
+    name: 'K plus proches voisins',
     params: {
       arg1: {
         type: ParamType.RANGE,
@@ -88,7 +88,7 @@ const classifiers = [
   },
   {
     id: 'support-vector-machine',
-    name: 'Support Vector Machine',
+    name: 'Machine à vecteurs de support',
     params: {
       arg1: {
         type: ParamType.SELECT,
@@ -105,7 +105,7 @@ const classifiers = [
   },
   {
     id: 'naive-bayes',
-    name: 'Naive Bayes',
+    name: 'Naïve Bayésienne',
     params: {
       arg1: {
         type: ParamType.RANGE,
@@ -114,16 +114,16 @@ const classifiers = [
         max: 20,
         step: 0.1
       } as RangeParam,
+      arg3: curveColorsSelect,
       arg2: {
         type: ParamType.BOOLEAN,
         label: 'Utiliser le noyau'
-      } as BooleanParam,
-      arg3: curveColorsSelect
+      } as BooleanParam
     }
   },
   {
     id: 'neural-network',
-    name: 'Neural Network',
+    name: 'Réseau de neurones artificiels',
     params: {
       arg1: {
         type: ParamType.RANGE,
@@ -134,7 +134,7 @@ const classifiers = [
       } as RangeParam,
       arg2: {
         type: ParamType.RANGE,
-        label: 'Decay',
+        label: 'Dégradation',
         min: 0,
         max: 1,
         step: 0.0001

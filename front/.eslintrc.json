@@ -26,6 +26,14 @@
     "@typescript-eslint/comma-dangle": "off",
     "prefer-destructuring": "off",
     "@typescript-eslint/no-unused-vars": "warn",
-    "no-return-assign": "off"
+    "no-return-assign": "off",
+    "react/prop-types": [
+      2,
+      {
+        "ignore": [
+          "children"
+        ]
+      }
+    ]
   }
 }

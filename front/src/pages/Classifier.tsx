@@ -21,6 +21,7 @@ import CheckboxField from '../components/form/CheckboxField';
 import RangeField from '../components/form/RangeField';
 import getDataset from '../services/dataset.service';
 import { Dataset } from '../models/Dataset';
+import LoadingIndicator from '../components/LoadingIndicator';
 
 interface ParamTypes {
   classifierId: string;
@@ -136,17 +137,24 @@ const Classifier = () => {
       <PageHeader displayBackButton>{classifier.name}</PageHeader>
       <Card>
         <div>
-          <h2>Rappel du dataset</h2>
-          {!fetchingDataset && (
-            <DatasetTable
-              height={560}
-              width="100%"
-              itemCount={dataset.data.length}
-              itemSize={52}
-              headers={dataset.headers}
-              rows={dataset.data}
-            />
-          )}
+          <h2>Dataset utilisé</h2>
+          {fetchingDataset
+            ? (
+              <div className="flex justify-center">
+                <LoadingIndicator className="mb-8" />
+              </div>
+            )
+            : (
+              <DatasetTable
+                height={560}
+                width="100%"
+                itemCount={dataset.data.length}
+                itemSize={52}
+                headers={dataset.headers}
+                rows={dataset.data}
+                className="mb-8"
+              />
+            )}
           <h2>Choix des variables</h2>
           <Form
             initialValues={classifierFormData}

@@ -6,12 +6,18 @@ import DatasetTableHeaderRow from './DatasetTableHeaderRow';
 import DatasetTableContext from './DatasetTableContext';
 
 const InnerTable = React.forwardRef<HTMLDivElement, React.HTMLProps<HTMLDivElement>>(
-  // eslint-disable-next-line react/prop-types
   ({ children, ...rest }, ref) => {
     const { headers, top } = useContext(DatasetTableContext);
     return (
       <div {...rest} ref={ref}>
-        <table style={{ top, position: 'absolute', width: '100%' }}>
+        <table
+          style={{
+            top,
+            position: 'relative',
+            borderCollapse: 'separate',
+            borderSpacing: '0'
+          }}
+        >
           <DatasetTableHeaderRow headers={headers} />
           <tbody>{children}</tbody>
         </table>
