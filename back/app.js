@@ -8,7 +8,7 @@ app.get('/dataset', async (req, res) => {
     try {
         res.json(H.Rlist_to_array(dataset))
     } catch (e) {
-        res.status(500).send('Something broke!')
+        res.status(500).send(e)
     }
 })
 
@@ -25,7 +25,7 @@ app.get('/classifier/rpart', async (req, res) => {
         res.send(output)
     } catch (e) {
         console.log(e)
-        res.status(500).send('Something broke!')
+        res.status(500).send(e)
     }
 })
 
@@ -42,7 +42,7 @@ app.get('/classifier/rf', async (req, res) => {
         res.send(output)
     } catch (e) {
         console.log(e)
-        res.status(500).send('Something broke!')
+        res.status(500).send(e)
     }
 })
 
@@ -61,7 +61,7 @@ app.get('/classifier/kknn', async (req, res) => {
         console.log('reached')
     } catch (e) {
         console.log(e)
-        res.status(500).send('Something broke!')
+        res.status(500).send(e)
     }
 })
 
@@ -77,7 +77,7 @@ app.get('/classifier/svm', async (req, res) => {
         res.send(output)
     } catch (e) {
         console.log(e)
-        res.status(500).send('Something broke!')
+        res.status(500).send(e)
     }
 })
 
