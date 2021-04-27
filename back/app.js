@@ -38,7 +38,7 @@ app.get('/classifier/rf', async (req, res) => {
     }
 
     try {
-        const output = await R.execR(inputs, H.rScripts.decisionTree)
+        const output = await R.execR(inputs, H.rScripts.randomForest)
         res.send(output)
     } catch (e) {
         console.log(e)
