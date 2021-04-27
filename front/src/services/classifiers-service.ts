@@ -1,38 +1,38 @@
-import { Classifier } from "../models/Classifier";
+import { Classifier } from '../models/Classifier';
 import {
   BooleanParam,
   ParamType, RangeParam,
   SelectParam,
   SelectParamOption
-} from "../models/ClassifierParam";
+} from '../models/ClassifierParam';
 
 const curveColorsSelect = {
   type: ParamType.SELECT,
   label: 'Couleur de la courbe',
   options: [
-    {label: 'Marron', value: 'burlywood4'},
-    {label: 'Vert lagon', value: 'aquamarine'},
-    {label: 'Bleu', value: 'blue'},
-    {label: 'Jaune', value: 'darkgoldenrod1'},
-    {label: 'Gris taupe', value: 'mistyrose4'},
-    {label: 'Noir', value: 'black'},
-    {label: 'Violet', value: 'purple'},
-    {label: 'Orange', value: 'orange'},
-  ] as SelectParamOption[],
+    { label: 'Marron', value: 'burlywood4' },
+    { label: 'Vert lagon', value: 'aquamarine' },
+    { label: 'Bleu', value: 'blue' },
+    { label: 'Jaune', value: 'darkgoldenrod1' },
+    { label: 'Gris taupe', value: 'mistyrose4' },
+    { label: 'Noir', value: 'black' },
+    { label: 'Violet', value: 'purple' },
+    { label: 'Orange', value: 'orange' }
+  ] as SelectParamOption[]
 } as SelectParam;
 
 const classifiers = [
   {
     id: 'decision-tree',
-    name: 'Decision Tree',
+    name: 'Arbre de décisions',
     params: {
       arg1: {
         type: ParamType.SELECT,
         label: 'Algorithme',
         options: [
-          {label: 'Gini', value: 'gini'},
-          {label: 'Information', value: 'information'},
-        ] as SelectParamOption[],
+          { label: 'Gini', value: 'gini' },
+          { label: 'Information', value: 'information' }
+        ] as SelectParamOption[]
       } as SelectParam,
       arg2: {
         type: ParamType.RANGE,
@@ -46,18 +46,18 @@ const classifiers = [
   },
   {
     id: 'random-forest',
-    name: 'Random Forest',
+    name: 'Forêt d\'arbres décisionnels',
     params: {
       arg1: {
         type: ParamType.RANGE,
-        label: `Nombre d'arbres`,
+        label: 'Nombre d\'arbres',
         min: 0,
         max: 500,
         step: 1
       } as RangeParam,
       arg2: {
         type: ParamType.RANGE,
-        label: `Nombre de variables testées`,
+        label: 'Nombre de variables testées',
         min: 0,
         max: 10,
         step: 0.1
@@ -67,7 +67,7 @@ const classifiers = [
   },
   {
     id: 'k-nearest-neighbors',
-    name: 'K-Nearest Neighbors',
+    name: 'K plus proches voisins',
     params: {
       arg1: {
         type: ParamType.RANGE,
@@ -88,24 +88,24 @@ const classifiers = [
   },
   {
     id: 'support-vector-machine',
-    name: 'Support Vector Machine',
+    name: 'Machine à vecteurs de support',
     params: {
       arg1: {
         type: ParamType.SELECT,
         label: 'Noyau',
         options: [
-          {label: 'Linéaire', value: 'linear'},
-          {label: 'Polynomial', value: 'polynomial'},
-          {label: 'Radial', value: 'radial'},
-          {label: 'Sigmoïde', value: 'sigmoid'}
-        ] as SelectParamOption[],
+          { label: 'Linéaire', value: 'linear' },
+          { label: 'Polynomial', value: 'polynomial' },
+          { label: 'Radial', value: 'radial' },
+          { label: 'Sigmoïde', value: 'sigmoid' }
+        ] as SelectParamOption[]
       } as SelectParam,
       arg2: curveColorsSelect
     }
   },
   {
     id: 'naive-bayes',
-    name: 'Naive Bayes',
+    name: 'Naïve Bayésienne',
     params: {
       arg1: {
         type: ParamType.RANGE,
@@ -114,16 +114,16 @@ const classifiers = [
         max: 20,
         step: 0.1
       } as RangeParam,
+      arg3: curveColorsSelect,
       arg2: {
         type: ParamType.BOOLEAN,
         label: 'Utiliser le noyau'
-      } as BooleanParam,
-      arg3: curveColorsSelect
+      } as BooleanParam
     }
   },
   {
     id: 'neural-network',
-    name: 'Neural Network',
+    name: 'Réseau de neurones artificiels',
     params: {
       arg1: {
         type: ParamType.RANGE,
@@ -134,14 +134,14 @@ const classifiers = [
       } as RangeParam,
       arg2: {
         type: ParamType.RANGE,
-        label: 'Decay',
+        label: 'Dégradation',
         min: 0,
         max: 1,
         step: 0.0001
       } as RangeParam,
       arg3: {
         type: ParamType.RANGE,
-        label: `Nombre d'itérations`,
+        label: 'Nombre d\'itérations',
         min: 0,
         max: 500,
         step: 1
@@ -152,17 +152,18 @@ const classifiers = [
 ] as Classifier[];
 
 export function getClassifierDefaultFormData(classifier: Classifier): Record<string, string> {
-  let classifierFormData = {} as Record<string, any>;
-  for (let key of Object.keys(classifier.params)) {
+  const classifierFormData = {} as Record<string, any>;
+  Object.keys(classifier.params).forEach((key) => {
     const foundClassifier = classifier.params[key];
     if (foundClassifier.type === ParamType.BOOLEAN) {
       classifierFormData[key] = false;
     } else if (foundClassifier.type === ParamType.RANGE) {
+      // eslint-disable-next-line max-len
       classifierFormData[key] = foundClassifier.max - ((foundClassifier.max - foundClassifier.min) / 2);
     } else {
       classifierFormData[key] = '';
     }
-  }
+  });
   return classifierFormData;
 }
 
@@ -171,5 +172,5 @@ export function getClassifiers(): Classifier[] {
 }
 
 export function getClassifier(classifierId: string): Classifier {
-  return classifiers[classifiers.findIndex(classifier => classifier.id === classifierId)];
+  return classifiers[classifiers.findIndex((classifier) => classifier.id === classifierId)];
 }
