@@ -44,7 +44,7 @@ plot(rf_perf, main = "Random Forests randomForest()", add = FALSE, col = arg3)
 rf_auc <- performance(rf_pred, "auc")
 
 confusionMatrix <- as.matrix(
-  table(data_et$default, dt_class),
+  table(data_et$default, rf_class),
 )
 
   rf.class <- predict(rf, data_new, type="class" )
@@ -52,11 +52,11 @@ confusionMatrix <- as.matrix(
 
   data_new$default <- rf.class
   data_new$prob1<-rf.prob[,1]
-  data_new$prob2<-rf.prob[,2]
+  data_new$probability<-rf.prob[,2]
 
   data_et$prediction <- rf_class
   data_et$prob1 <- rf_prob[,1]
-  data_et$prob2 <- rf_prob[,2]
+  data_et$probability <- rf_prob[,2]
 
 return(list("AUC"=as.character(attr(rf_auc, "y.values")),
             "dataEtPrediction"=data_et,

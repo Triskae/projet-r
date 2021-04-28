@@ -53,11 +53,11 @@ dt_auc <- performance(dt_pred, "auc")
 
  data_new$default <- dt.class
  data_new$prob1<-dt.prob[,1]
- data_new$prob2<-dt.prob[,2]
+ data_new$probability<-dt.prob[,2]
 
  data_et$prediction <- dt_class
  data_et$prob1 <- dt_prob[,1]
- data_et$prob2 <- dt_prob[,2]
+ data_et$probability <- dt_prob[,2]
 
 
  return(list("AUC"=as.character(attr(dt_auc, "y.values")),
