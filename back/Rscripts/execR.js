@@ -31,7 +31,11 @@ module.exports = async (inputs, rScript) => {
     }
 
     return {
-        AUC: AUC,
+        accuracy: H.getAccuracyFromMatrix([
+            CM.predictedPositive,
+            CM.predictedNegative,
+        ]),
+        AUC: parseFloat(AUC),
         image,
         dataEtPrediction: H.Rlist_to_array(dataEtPrediction),
         dataNewPrediction: H.Rlist_to_array(dataNewPrediction),
