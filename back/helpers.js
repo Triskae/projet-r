@@ -5,7 +5,11 @@ const fs = require('fs')
 
 const getDataset = async () => await csv().fromFile(csvPath)
 
-const Rlist_to_array = (Rlist) => [_.keys(Rlist[0]), ..._.map(Rlist, _.values)]
+const Rlist_to_array = (Rlist) =>
+    _.map([_.keys(Rlist[0]), ..._.map(Rlist, _.values)], (x) => {
+        const [data, ...prob] = _.chunk(x, _.size(x) - 2)
+        return [...data, _.max(...prob)]
+    })
 
 const rScripts = {
     decisionTree: 'rpart',

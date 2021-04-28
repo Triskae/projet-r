@@ -15,9 +15,9 @@ app.get('/dataset', async (req, res) => {
 //for decision tree
 app.get('/classifier/rpart', async (req, res) => {
     const inputs = {
-        arg1: req.body.arg1, // "gini" || "information"
-        arg2: req.body.arg2, // number [0,20] step:0.1
-        arg3: req.body.arg3, // color ex: 'orange', 'green', 'red', 'blue', ...
+        arg1: req.query.arg1, // "gini" || "information"
+        arg2: parseFloat(req.query.arg2), // number [0,20] step:0.1
+        arg3: req.query.arg3, // color ex: 'orange', 'green', 'red', 'blue', ...
     }
 
     try {
@@ -32,9 +32,9 @@ app.get('/classifier/rpart', async (req, res) => {
 //for random forest
 app.get('/classifier/rf', async (req, res) => {
     const inputs = {
-        arg1: req.body.arg1, // number ex: [0,500] step:1
-        arg2: req.body.arg2, // number ex: [0,10] step:0.1
-        arg3: req.body.arg3, // color ex: 'orange', 'green', 'red', 'blue', ...
+        arg1: parseFloat(req.query.arg1), // number ex: [0,500] step:1
+        arg2: parseFloat(req.query.arg2), // number ex: [0,10] step:0.1
+        arg3: req.query.arg3, // color ex: 'orange', 'green', 'red', 'blue', ...
     }
 
     try {
@@ -49,9 +49,9 @@ app.get('/classifier/rf', async (req, res) => {
 //k nearest neighbors
 app.get('/classifier/kknn', async (req, res) => {
     const inputs = {
-        arg1: req.body.arg1, // number [0,20] step:0.1
-        arg2: req.body.arg2, // number [0,10] step:0.1
-        arg3: req.body.arg3, // color ex: 'orange', 'green', 'red', 'blue', ...
+        arg1: parseFloat(req.query.arg1), // number [0,20] step:0.1
+        arg2: parseFloat(req.query.arg2), // number [0,10] step:0.1
+        arg3: req.query.arg3, // color ex: 'orange', 'green', 'red', 'blue', ...
     }
 
     try {
@@ -68,8 +68,8 @@ app.get('/classifier/kknn', async (req, res) => {
 //support vector machine
 app.get('/classifier/svm', async (req, res) => {
     const inputs = {
-        arg1: req.body.arg1, // "linear" || "polynomial" || "radial" || "sigmoid"
-        arg2: req.body.arg2, // color ex: "red", "blue", "green", "orange"
+        arg1: req.query.arg1, // "linear" || "polynomial" || "radial" || "sigmoid"
+        arg2: req.query.arg2, // color ex: "red", "blue", "green", "orange"
     }
 
     try {
@@ -84,9 +84,9 @@ app.get('/classifier/svm', async (req, res) => {
 //naive bayes
 app.get('/classifier/nb', async (req, res) => {
     const inputs = {
-        arg1: req.body.arg1, // number [0,20] step:0.1
-        arg2: req.body.arg2, // boolean
-        arg3: req.body.arg3, // color ex: 'orange', 'green', 'red', 'blue', ...
+        arg1: parseFloat(req.query.arg1), // number [0,20] step:0.1
+        arg2: req.query.arg2 === 'true', // boolean
+        arg3: req.query.arg3, // color ex: 'orange', 'green', 'red', 'blue', ...
     }
     const output = await R.execR(inputs, H.rScripts.naiveBayes)
 
@@ -96,10 +96,10 @@ app.get('/classifier/nb', async (req, res) => {
 //neural network
 app.get('/classifier/nnet', async (req, res) => {
     const inputs = {
-        arg1: req.body.arg1, // number [0,100] step:1
-        arg2: req.body.arg2, // number [0,1] step: 0.0001
-        arg3: req.body.arg3, // number [0,500] step:1
-        arg4: req.body.arg4, // color ex: 'orange', 'green', 'red', 'blue','tomato', ...
+        arg1: parseFloat(req.query.arg1), // number [0,100] step:1
+        arg2: parseFloat(req.query.arg2), // number [0,1] step: 0.0001
+        arg3: parseFloat(req.query.arg3), // number [0,500] step:1
+        arg4: req.query.arg4, // color ex: 'orange', 'green', 'red', 'blue','tomato', ...
     }
 
     const output = await R.execR(inputs, H.rScripts.neuralNetwork)

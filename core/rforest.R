@@ -11,6 +11,7 @@ needs(ROCR)
 
 setwd('data')
 data <- read.csv("dataset.csv", header = TRUE, sep = ",", dec = ".", stringsAsFactors = T)
+data_new <- read.csv("predict.csv", header = TRUE, sep = ",", dec = ".", stringsAsFactors = T)
 setwd('../images')
 data_shuffle <- data[sample(seq_along(data[, 1])),]
 
@@ -46,9 +47,20 @@ confusionMatrix <- as.matrix(
   table(data_et$default, dt_class),
 )
 
+  rf.class <- predict(rf, data_new, type="class" )
+  rf.prob <- predict(rf, data_new, type="prob")
+
+  data_new$default <- rf.class
+  data_new$prob1<-rf.prob[,1]
+  data_new$prob2<-rf.prob[,2]
+
+  data_et$prediction <- rf_class
+  data_et$prob1 <- rf_prob[,1]
+  data_et$prob2 <- rf_prob[,2]
+
 return(list("AUC"=as.character(attr(rf_auc, "y.values")),
-            "prediction"=rf_class,
-            "dataet"=data_et,
+            "dataEtPrediction"=data_et,
+            "dataNewPrediction"=data_new,
             "confusionMatrix"=
               list("predictedPositive"=confusionMatrix[1,]
                 ,"predictedNegative"=confusionMatrix[2,])

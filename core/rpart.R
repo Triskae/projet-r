@@ -11,6 +11,7 @@ needs(ROCR)
 
 setwd('data')
 data <- read.csv("dataset.csv", header = TRUE, sep = ",", dec = ".", stringsAsFactors = T)
+data_new <- read.csv("predict.csv", header = TRUE, sep = ",", dec = ".", stringsAsFactors = T)
 setwd('../images')
 data_shuffle <- data[sample(seq_along(data[, 1])),]
 
@@ -47,9 +48,21 @@ dt_auc <- performance(dt_pred, "auc")
    table(data_et$default, dt_class),
  )
 
+ dt.class <- predict(dt, data_new, type="class" )
+ dt.prob <- predict(dt, data_new, type="prob")
+
+ data_new$default <- dt.class
+ data_new$prob1<-dt.prob[,1]
+ data_new$prob2<-dt.prob[,2]
+
+ data_et$prediction <- dt_class
+ data_et$prob1 <- dt_prob[,1]
+ data_et$prob2 <- dt_prob[,2]
+
+
  return(list("AUC"=as.character(attr(dt_auc, "y.values")),
-             "prediction"=dt_class,
-             "dataet"=data_et,
+             "dataEtPrediction"=data_et,
+             "dataNewPrediction"=data_new,
              "confusionMatrix"=
                list("predictedPositive"=confusionMatrix[1,]
                ,"predictedNegative"=confusionMatrix[2,])
