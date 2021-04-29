@@ -3,9 +3,9 @@ import { generateUniqueID } from 'web-vitals/dist/modules/lib/generateUniqueID';
 import classNames from 'classnames';
 import DatasetTableContext from './DatasetTableContext';
 
-type DatasetTableRowProps = {
+interface DatasetTableRowProps {
   index: number
-};
+}
 
 const DatasetTableRow = ({ index }: DatasetTableRowProps) => {
   const { headers, rows } = useContext(DatasetTableContext);

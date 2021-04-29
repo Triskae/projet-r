@@ -1,10 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
 
-type CardProps = {
+interface CardProps {
   className?: string;
   children: React.ReactNode
-};
+}
 
 const Card = ({ className, children }: CardProps) => {
   const cardClassName = classNames(

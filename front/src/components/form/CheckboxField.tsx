@@ -1,10 +1,10 @@
 import React from 'react';
 import { Field } from 'formik';
 
-type CheckboxFieldProps = {
+interface CheckboxFieldProps {
   label: string;
   name: string;
-};
+}
 
 const CheckboxField = ({ label, name }: CheckboxFieldProps) => (
   <>
