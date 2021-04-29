@@ -1,12 +1,12 @@
 import React from 'react';
 import { Field, ErrorMessage } from 'formik';
 
-type TextFieldProps = {
+interface TextFieldProps {
   label: string;
   type: 'text' | 'number';
   name: string;
   placeholder: string;
-};
+}
 
 const TextField = ({ label, type, name, placeholder }: TextFieldProps) => (
   <>

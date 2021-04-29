@@ -3,13 +3,13 @@ import { Field, FieldProps } from 'formik';
 import ReactSlider from 'react-slider';
 import classNames from 'classnames';
 
-type RangeFieldProps = {
+interface RangeFieldProps {
   label: string;
   name: string;
   min: number;
   max: number;
   step: number;
-};
+}
 
 interface FormValues {
   title: string
