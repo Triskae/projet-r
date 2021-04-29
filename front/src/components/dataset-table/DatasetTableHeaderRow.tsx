@@ -1,8 +1,8 @@
 import React from 'react';
 
-type HeaderRowProps = {
+interface HeaderRowProps {
   headers: string[]
-};
+}
 
 const DatasetTableHeaderRow = ({ headers }: HeaderRowProps) => (
   <thead>

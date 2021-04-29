@@ -1,10 +1,15 @@
-import { Classifier } from '../models/Classifier';
+import axios from 'axios';
+import { Classifier, ClassifierParamValues, ClassifierResult } from '../models/Classifier';
 import {
   BooleanParam,
   ParamType, RangeParam,
   SelectParam,
   SelectParamOption
 } from '../models/ClassifierParam';
+import getConfiguration from '../project-config';
+import { formatFetchedDataset } from './dataset.service';
+
+const baseApiURL = getConfiguration().apiBaseURL;
 
 const curveColorsSelect = {
   type: ParamType.SELECT,
@@ -25,6 +30,7 @@ const classifiers = [
   {
     id: 'decision-tree',
     name: 'Arbre de décisions',
+    endpoint: 'rpart',
     params: {
       arg1: {
         type: ParamType.SELECT,
@@ -47,6 +53,7 @@ const classifiers = [
   {
     id: 'random-forest',
     name: 'Forêt d\'arbres décisionnels',
+    endpoint: 'rf',
     params: {
       arg1: {
         type: ParamType.RANGE,
@@ -68,6 +75,7 @@ const classifiers = [
   {
     id: 'k-nearest-neighbors',
     name: 'K plus proches voisins',
+    endpoint: 'kknn',
     params: {
       arg1: {
         type: ParamType.RANGE,
@@ -89,6 +97,7 @@ const classifiers = [
   {
     id: 'support-vector-machine',
     name: 'Machine à vecteurs de support',
+    endpoint: 'svm',
     params: {
       arg1: {
         type: ParamType.SELECT,
@@ -106,6 +115,7 @@ const classifiers = [
   {
     id: 'naive-bayes',
     name: 'Naïve Bayésienne',
+    endpoint: 'nb',
     params: {
       arg1: {
         type: ParamType.RANGE,
@@ -124,6 +134,7 @@ const classifiers = [
   {
     id: 'neural-network',
     name: 'Réseau de neurones artificiels',
+    endpoint: 'nnet',
     params: {
       arg1: {
         type: ParamType.RANGE,
@@ -173,4 +184,27 @@ export function getClassifiers(): Classifier[] {
 
 export function getClassifier(classifierId: string): Classifier {
   return classifiers[classifiers.findIndex((classifier) => classifier.id === classifierId)];
+}
+
+export async function getClassifierResult(
+  classifierId: string,
+  paramValues: ClassifierParamValues
+): Promise<ClassifierResult> {
+  const classifier = getClassifier(classifierId);
+  const response = await axios.get(`${baseApiURL}/classifier/${classifier.endpoint}`, {
+    params: paramValues
+  });
+  const fetchedClassifierResult = response.data;
+
+  const {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    dataEtPrediction = [],
+    dataNewPrediction = [],
+    ...finalClassifierResult
+  } = { ...fetchedClassifierResult };
+
+  finalClassifierResult.dataEtPrediction = formatFetchedDataset(dataEtPrediction);
+  finalClassifierResult.dataNewPrediction = formatFetchedDataset(dataNewPrediction);
+
+  return finalClassifierResult;
 }

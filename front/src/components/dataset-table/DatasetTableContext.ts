@@ -1,12 +1,12 @@
 import React from 'react';
 import { DatasetRow } from '../../models/Dataset';
 
-type DatasetTableContextValues = {
+interface DatasetTableContextValues {
   top: number
   setTop: (top: number) => void
   headers: string[],
   rows: DatasetRow[]
-};
+}
 
 const DatasetTableContext = React.createContext<DatasetTableContextValues>({
   top: 0,

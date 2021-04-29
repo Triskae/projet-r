@@ -2,10 +2,10 @@ import React from 'react';
 import classNames from 'classnames';
 import BackButton from './BackButton';
 
-type PageHeaderProps = {
+interface PageHeaderProps {
   displayBackButton?: boolean,
   children: string
-};
+}
 
 const PageHeader = ({ displayBackButton = false, children }: PageHeaderProps) => {
   const containerClassNames = classNames({

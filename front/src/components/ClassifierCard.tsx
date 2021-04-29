@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import Button from './Button';
 import { Classifier } from '../models/Classifier';
 
-type ClassifierCardProps = {
+interface ClassifierCardProps {
   classifier: Classifier,
   baseUrl: string
-};
+}
 
 const ClassifierCard = ({ classifier, baseUrl }: ClassifierCardProps) => (
   <div className="bg-white overflow-hidden rounded-lg border">

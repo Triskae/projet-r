@@ -1,11 +1,11 @@
 import React, { MouseEventHandler } from 'react';
 import classNames from 'classnames';
 
-type ButtonProps = {
+interface ButtonProps {
   className?: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   children: string
-};
+}
 
 const Button = ({ ...props }: ButtonProps) => {
   const buttonClasses = classNames(

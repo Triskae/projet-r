@@ -2,11 +2,11 @@ import React from 'react';
 import { Field, ErrorMessage } from 'formik';
 import { SelectParamOption } from '../../models/ClassifierParam';
 
-type SelectFieldProps = {
+interface SelectFieldProps {
   label: string;
   name: string;
   options: SelectParamOption[]
-};
+}
 
 const SelectField = ({ label, name, options }: SelectFieldProps) => (
   <>
