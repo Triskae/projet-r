@@ -11,6 +11,7 @@ needs(ROCR)
 
 setwd('data')
 data <- read.csv("dataset.csv", header = TRUE, sep = ",", dec = ".", stringsAsFactors = T)
+data_new <- read.csv("predict.csv", header = TRUE, sep = ",", dec = ".", stringsAsFactors = T)
 setwd('../images')
 data_shuffle <- data[sample(seq_along(data[, 1])),]
 
@@ -40,9 +41,17 @@ test_knn <- function(arg1, arg2, arg3){
     table(data_et$default, knn$fitted.values),
   )
 
+  knn.new <- kknn(default~., data_ea, data_new, k = arg1, distance = arg2)
+
+  data_new$prediction <- knn.new$fitted.values
+  data_new$probability <- knn.new$prob[,1]
+
+  data_et$prediction <- knn$fitted.values
+  data_et$probability <- knn$prob[,1]
+
   return(list("AUC"=as.character(attr(knn_auc, "y.values")),
-              "prediction"=knn$fitted.values,
-              "dataet"=data_et,
+              "dataEtPrediction"=data_et,
+              "dataNewPrediction"=data_new,
               "confusionMatrix"=
                 list("predictedPositive"=confusionMatrix[1,]
                   ,"predictedNegative"=confusionMatrix[2,])

@@ -51,12 +51,10 @@ confusionMatrix <- as.matrix(
   rf.prob <- predict(rf, data_new, type="prob")
 
   data_new$default <- rf.class
-  data_new$prob1<-rf.prob[,1]
-  data_new$probability<-rf.prob[,2]
+  data_new$probability<-rf.prob[,1]
 
   data_et$prediction <- rf_class
-  data_et$prob1 <- rf_prob[,1]
-  data_et$probability <- rf_prob[,2]
+  data_et$probability <- rf_prob[,1]
 
 return(list("AUC"=as.character(attr(rf_auc, "y.values")),
             "dataEtPrediction"=data_et,

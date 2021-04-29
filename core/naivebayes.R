@@ -11,6 +11,7 @@ needs(ROCR)
 
 setwd('data')
 data <- read.csv("dataset.csv", header = TRUE, sep = ",", dec = ".", stringsAsFactors = T)
+data_new <- read.csv("predict.csv", header = TRUE, sep = ",", dec = ".", stringsAsFactors = T)
 setwd('../images')
 data_shuffle <- data[sample(seq_along(data[, 1])),]
 
@@ -39,6 +40,7 @@ test_nb <- function(arg1, arg2, arg3){
   nb_perf <- performance(nb_pred,"tpr","fpr")
   plot(nb_perf, main = "Classifieurs bayésiens naïfs naiveBayes()", add = FALSE, col = arg3)
   dev.off()
+
   confusionMatrix <- as.matrix(
     table(data_et$default, nb_class),
   )
@@ -46,9 +48,18 @@ test_nb <- function(arg1, arg2, arg3){
   # Calcul de l'AUC et affichage par la fonction cat()
   nb_auc <- performance(nb_pred, "auc")
 
+  nb.class <- predict(nb, data_new, type="class" )
+  nb.prob <- predict(nb, data_new, type="prob")
+
+  data_new$default <- nb.class
+  data_new$probability<-nb.prob[,1]
+
+  data_et$prediction <- nb_class
+  data_et$probability <- nb_prob[,1]
+
   return(list("AUC"=as.character(attr(nb_auc, "y.values")),
-              "prediction"=nb_class,
-              "dataet"=data_et,
+              "dataEtPrediction"=data_et,
+              "dataNewPrediction"=data_new,
               "confusionMatrix"=
                 list("predictedPositive"=confusionMatrix[1,]
                   ,"predictedNegative"=confusionMatrix[2,])

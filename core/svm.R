@@ -9,14 +9,15 @@ needs(ROCR)
 # PREPARATION DES DONNEES #
 #-------------------------#
 
-
 setwd('data')
 data <- read.csv("dataset.csv", header = TRUE, sep = ",", dec = ".", stringsAsFactors = T)
+data_new <- read.csv("predict.csv", header = TRUE, sep = ",", dec = ".", stringsAsFactors = T)
 setwd('../images')
 data_shuffle <- data[sample(seq_along(data[, 1])),]
 
 data_ea <- data_shuffle[1:800,]
 data_et <- data_shuffle[801:1200,]
+
 
 jpeg('svm.jpg')
 
@@ -51,9 +52,20 @@ test_svm <- function(arg1, arg2){
     table(data_et$default, svm_class),
   )
 
+  svm.class <- predict(svm, data_new, type="response" )
+  svm.prob <- attr(predict(svm, data_new, probability = TRUE),"probabilities")
+
+  data_new$default <- svm.class
+  data_new$probability<-svm.prob[,1]
+
+  data_et$prediction <- svm_class
+  data_et$probability <- svm_prob[,1]
+
+
+
   return(list("AUC"=as.character(attr(svm_auc, "y.values")),
-              "prediction"=svm_class,
-              "dataet"=data_et,
+              "dataEtPrediction"=data_et,
+              "dataNewPrediction"=data_new,
               "confusionMatrix"=
                 list("predictedPositive"=confusionMatrix[1,]
                   ,"predictedNegative"=confusionMatrix[2,])

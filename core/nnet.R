@@ -11,6 +11,7 @@ needs(ROCR)
 
 setwd('data')
 data <- read.csv("dataset.csv", header = TRUE, sep = ",", dec = ".", stringsAsFactors = T)
+data_new <- read.csv("predict.csv", header = TRUE, sep = ",", dec = ".", stringsAsFactors = T)
 setwd('../images')
 data_shuffle <- data[sample(seq_along(data[, 1])),]
 
@@ -53,13 +54,24 @@ test_nnet <- function(arg1, arg2, arg3, arg4){
     table(data_et$default, nn_class),
   )
 
+  nn.class <- predict(nn, data_new, type="class" )
+  nn.prob <- predict(nn, data_new, type="raw")
+
+  data_new$default <- nn.class
+  data_new$probability<-nn.prob[,1]
+
+  data_et$prediction <- nn_class
+  data_et$probability <- nn_prob[,1]
+
+
   return(list("AUC"=as.character(attr(nn_auc, "y.values")),
-              "prediction"=nn_class,
-              "dataet"=data_et,
+              "dataEtPrediction"=data_et,
+              "dataNewPrediction"=data_new,
               "confusionMatrix"=
                 list("predictedPositive"=confusionMatrix[1,]
                   ,"predictedNegative"=confusionMatrix[2,])
   ))
+
 }
 
 test_nnet(arg1,arg2,arg3,arg4)
