@@ -1,3 +1,4 @@
+require('dotenv').config()
 const R = require('./Rscripts')
 const app = require('./server')
 const H = require('./helpers')
