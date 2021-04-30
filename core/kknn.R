@@ -41,6 +41,11 @@ test_knn <- function(arg1, arg2, arg3){
     table(data_et$default, knn$fitted.values),
   )
 
+  #this is a security to ensure a 2 dimensionnal confusion matrix
+  if(length(confusionMatrix[1,])==1){
+    confusionMatrix <- cbind(c(confusionMatrix[1,],0), c(confusionMatrix[2,],0))
+  }
+
   knn.new <- kknn(default~., data_ea, data_new, k = arg1, distance = arg2)
 
   data_new$prediction <- knn.new$fitted.values

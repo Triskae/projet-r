@@ -5,9 +5,8 @@ const fs = require('fs')
 
 const getDataset = async () => await csv().fromFile(csvPath)
 
-const getAccuracyFromMatrix = (CM) => {
-    return (CM[0][0] + CM[1][1]) / (_.sum(CM[0]) + _.sum(CM[1]))
-}
+const getAccuracyFromMatrix = (CM) =>
+    (CM[0][0] + CM[1][1] || [0, 0]) / (_.sum(CM[0]) + _.sum(CM[1]) || 0)
 
 const Rlist_to_array = (Rlist) =>
     _.map([_.keys(Rlist[0]), ..._.map(Rlist, _.values)], (x) => {

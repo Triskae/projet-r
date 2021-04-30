@@ -48,6 +48,11 @@ dt_auc <- performance(dt_pred, "auc")
    table(data_et$default, dt_class),
  )
 
+ #this is a security to ensure a 2 dimensionnal confusion matrix
+ if(length(confusionMatrix[1,])==1){
+  confusionMatrix <- cbind(c(confusionMatrix[1,],0), c(confusionMatrix[2,],0))
+ }
+
  dt.class <- predict(dt, data_new, type="class" )
  dt.prob <- predict(dt, data_new, type="prob")
 

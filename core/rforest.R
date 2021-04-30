@@ -47,6 +47,11 @@ confusionMatrix <- as.matrix(
   table(data_et$default, rf_class),
 )
 
+  #this is a security to ensure a 2 dimensionnal confusion matrix
+  if(length(confusionMatrix[1,])==1){
+    confusionMatrix <- cbind(c(confusionMatrix[1,],0), c(confusionMatrix[2,],0))
+  }
+
   rf.class <- predict(rf, data_new, type="class" )
   rf.prob <- predict(rf, data_new, type="prob")
 

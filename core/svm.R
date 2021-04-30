@@ -52,6 +52,11 @@ test_svm <- function(arg1, arg2){
     table(data_et$default, svm_class),
   )
 
+  #this is a security to ensure a 2 dimensionnal confusion matrix
+  if(length(confusionMatrix[1,])==1){
+    confusionMatrix <- cbind(c(confusionMatrix[1,],0), c(confusionMatrix[2,],0))
+  }
+
   svm.class <- predict(svm, data_new, type="response" )
   svm.prob <- attr(predict(svm, data_new, probability = TRUE),"probabilities")
 
