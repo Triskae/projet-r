@@ -1,12 +1,8 @@
 # R-WITH-NODE
 
-__________________
-
-__________________
 
 ## Prerequisite
 
-____________________
 
 Install the [latest version of R](https://cran.r-project.org/bin/windows/base/)
 
@@ -34,7 +30,7 @@ Install the [latest version of nodejs](https://nodejs.org/en/download/)
 Install the latest version of nodejs and npm
 
 
-#Backend
+# Backend
 
 Go to the backend folder and run:
 
