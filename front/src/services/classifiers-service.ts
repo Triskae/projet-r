@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useState } from 'react';
 import { Classifier, ClassifierParamValues, ClassifierResult } from '../models/Classifier';
 import {
   BooleanParam,
@@ -114,7 +115,7 @@ const classifiers = [
   },
   {
     id: 'naive-bayes',
-    name: 'Naïve Bayésienne',
+    name: 'Naïve Bayésien',
     endpoint: 'nb',
     params: {
       arg1: {
@@ -140,7 +141,7 @@ const classifiers = [
         type: ParamType.RANGE,
         label: 'Taille',
         min: 0,
-        max: 100,
+        max: 50,
         step: 1
       } as RangeParam,
       arg2: {
@@ -206,5 +207,49 @@ export async function getClassifierResult(
   finalClassifierResult.dataEtPrediction = formatFetchedDataset(dataEtPrediction);
   finalClassifierResult.dataNewPrediction = formatFetchedDataset(dataNewPrediction);
 
+  (finalClassifierResult as ClassifierResult).classifierId = classifierId;
+  (finalClassifierResult as ClassifierResult).date = new Date();
+
   return finalClassifierResult;
+}
+
+export function useLocalStorage<T>(key: string, initialValue: T) {
+  const [storedValue, setStoredValue] = useState<T>(() => {
+    try {
+      const item = window.localStorage.getItem(key);
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      console.log(error);
+      return initialValue;
+    }
+  });
+  const setValue = (value: T | ((val: T) => T)) => {
+    try {
+      const valueToStore = value instanceof Function ? value(storedValue) : value;
+      setStoredValue(valueToStore);
+      window.localStorage.setItem(key, JSON.stringify(valueToStore));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  return [storedValue, setValue] as const;
+}
+
+export function getSavedClassifierResults(): ClassifierResult[] {
+  const classifierResults = [] as ClassifierResult[];
+  classifiers.forEach((classifier) => {
+    const savedClassifierResult = localStorage.getItem(`${classifier.id}-save`);
+    if (savedClassifierResult) {
+      classifierResults.push(JSON.parse(savedClassifierResult) as ClassifierResult);
+    }
+  });
+  return classifierResults;
+}
+
+export function getSavedClassifierResult(classifierId: string): ClassifierResult | null {
+  const item = localStorage.getItem(`${classifierId}-save`);
+  if (item) {
+    return JSON.parse(item) as ClassifierResult;
+  }
+  return null;
 }

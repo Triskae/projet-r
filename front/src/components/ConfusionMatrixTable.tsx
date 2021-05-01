@@ -1,4 +1,5 @@
 import React from 'react';
+import { generateUniqueID } from 'web-vitals/dist/modules/lib/generateUniqueID';
 import { ConfusionMatrix } from '../models/Classifier';
 
 interface ConfusionMatrixProps {
@@ -14,21 +15,21 @@ const ConfusionMatrixTable = ({ confusionMatrix }: ConfusionMatrixProps) => (
             <thead>
               <tr>
                 <th> </th>
-                <th>Vrai négatif</th>
-                <th>Vrai positif</th>
+                <th>Vrai</th>
+                <th>Faux</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <th>Faux négatif</th>
+                <th>Prédit vrai</th>
                 {confusionMatrix[0].map((data) => (
-                  <td key={data}>{data}</td>
+                  <td key={data + generateUniqueID()}>{data}</td>
                 ))}
               </tr>
               <tr>
-                <th>Faux Positif</th>
+                <th>Prédit faux</th>
                 {confusionMatrix[1].map((data) => (
-                  <td key={data}>{data}</td>
+                  <td key={data + generateUniqueID()}>{data}</td>
                 ))}
               </tr>
             </tbody>
