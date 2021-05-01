@@ -3,10 +3,7 @@
     "browser": true,
     "es2021": true
   },
-  "extends": [
-    "plugin:react/recommended",
-    "airbnb-typescript"
-  ],
+  "extends": ["plugin:react/recommended", "airbnb-typescript"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -16,11 +13,12 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint"
-  ],
+  "plugins": ["react", "@typescript-eslint"],
   "rules": {
+    "react/jsx-one-expression-per-line": "off",
+    "linebreak-style": 0,
+    "global-require": 0,
+    "eslint linebreak-style": [0, "error", "windows"],
     "object-curly-newline": "off",
     "react/jsx-props-no-spreading": "off",
     "@typescript-eslint/comma-dangle": "off",
@@ -30,9 +28,7 @@
     "react/prop-types": [
       2,
       {
-        "ignore": [
-          "children"
-        ]
+        "ignore": ["children"]
       }
     ]
   }

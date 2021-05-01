@@ -10,7 +10,7 @@ import Saves from './pages/Saves';
 
 const routes = [
   { name: 'Présentation', to: '/', exact: true, page: ProjectInfo, display: true },
-  { name: 'Prédictions', to: '/predictions', exact: true, page: Predictions, display: true },
+  { name: 'Générer un modèle', to: '/predictions', exact: true, page: Predictions, display: true },
   { name: 'Classifieur', to: '/predictions/:classifierId', exact: false, page: Classifier, display: false },
   { name: 'Sauvegardes', to: '/saves', exact: true, page: Saves, display: true },
   { name: 'Classifieur Sauvegardé', to: '/saves/:classifierId', exact: false, page: Classifier, display: false }

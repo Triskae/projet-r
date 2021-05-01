@@ -1,6 +1,9 @@
 import { Link, useParams, useRouteMatch } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
+// @ts-ignore
 import * as Yup from 'yup';
+import { DocumentDownloadIcon } from '@heroicons/react/solid';
+import H from '../helpers';
 import Card from '../components/Card';
 import PageHeader from '../components/PageHeader';
 import {
@@ -50,8 +53,7 @@ const Classifier = () => {
   const [fetchingDataset, setFetchingDataset] = useState(false);
   const [classifierResult, setClassifierResult] = useState<ClassifierResult | null>(null);
   const [fetchingClassifierResult, setFetchingClassifierResult] = useState(false);
-  const [savedClassifierResult, setSavedClassifierResult] = useLocalStorage(`${classifierId}-save`, {});
-
+  const setSavedClassifierResult = useLocalStorage(`${classifierId}-save`, {})[1];
   const initValidationSchemaForm = (form: Record<string, ClassifierParam>) => {
     const finalClassifierValidationSchema = {} as Record<string, any>;
 
@@ -200,11 +202,11 @@ const Classifier = () => {
                 </div>
                 <div className="flex flex-col sm:flex-row mt-12 sm:w-fit sm:mt-12 sticky top-0">
                   <Button className="mr-4" type="submit">
-                    Prédire un
+                    Générer un
                     {' '}
                     {classifierResult && <span> nouveau </span>}
                     {' '}
-                    résultat
+                    modèle
                   </Button>
                   {classifierResult && (
                     <Button
@@ -221,13 +223,13 @@ const Classifier = () => {
           )}
           {route === 'saves' && (
             <Link to={`/predictions/${classifier.id}`} className="overflow-hidden">
-              <Button className="w-fit">Effectuer une nouvelle prédiction</Button>
+              <Button className="w-fit">Générer un nouveau modèle</Button>
             </Link>
           )}
         </div>
       </Card>
       <Card>
-        <h2>Résultat de la prédiction</h2>
+        <h2>Modèle généré</h2>
         {(!fetchingClassifierResult && classifierResult === null)
         && (
           <div className="flex justify-center py-4">
@@ -260,7 +262,18 @@ const Classifier = () => {
                   />
                 </div>
                 <div>
-                  <h3>Résultats de la prédiction</h3>
+                  <div className="flex items-center pb-6 justify-between">
+                    <h3 className="pb-0">Modèle appliqué</h3>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const csv = H.jsonToCsv(classifierResult?.dataNewPrediction.data);
+                        H.download(csv);
+                      }}
+                    >
+                      <DocumentDownloadIcon className="text-blue-500 w-8 hover:text-blue-600" />
+                    </button>
+                  </div>
                   <DatasetTable
                     height={300}
                     width="100%"
