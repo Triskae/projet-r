@@ -31,7 +31,7 @@ const ProjectInfo = () => (
           </div>
 
           <div style={{ marginBottom: '2em' }}>
-            {` Pour chaque indicateurs de performance, la valeur est comprise entre 0.5 et 1.
+            {` Pour chaque indicateurs de performance, la valeur est comprise entre 0 et 1.
              Plus on se rapproche de 1, plus le modèle est performant. Le paramétrage des classifieurs
              demande un peu de connaissance en Data Science. Pour pouvoir rendre notre
              application plus réaliste, nous avons une fonctionnalité de sauvegarde qui permet de

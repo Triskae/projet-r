@@ -38,7 +38,7 @@ test_nb <- function(arg1, arg2, arg3){
   # Courbe ROC
   nb_pred <- prediction(nb_prob[,2], data_et$default)
   nb_perf <- performance(nb_pred,"tpr","fpr")
-  plot(nb_perf, main = "Classifieurs bayésiens naïfs naiveBayes()", add = FALSE, col = arg3)
+  plot(nb_perf, main = "Classifieurs bayesiens naifs naiveBayes()", add = FALSE, col = arg3)
   dev.off()
 
   confusionMatrix <- as.matrix(
