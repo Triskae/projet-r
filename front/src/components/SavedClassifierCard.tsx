@@ -31,7 +31,7 @@ const SavedClassifierCard = (
             {isFirst && <span className="text-sm text-blue-500 font-semibold mb-2">Modèle le plus précis</span>}
             <span className="font-medium whitespace-nowrap overflow-hidden overflow-ellipsis mb-2">{classifier.name} (score : {classifierResult.score})</span>
             <span className="text-sm text-gray-400">
-              Sauvegardée le {format(parseJSON(classifierResult.date), 'EEEE d MMMM à HH:m', { locale: fr })} ·
+              Sauvegardée le {format(parseJSON(classifierResult.date), 'EEEE d MMMM à HH:mm', { locale: fr })} ·
               AUC : {classifierResult.AUC} · Précision matrice : {classifierResult.accuracy}
             </span>
           </div>
