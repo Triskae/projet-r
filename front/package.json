@@ -27,6 +27,7 @@
     "react-window": "^1.8.6",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1",
+    "xlsx": "^0.16.9",
     "yup": "^0.32.9"
   },
   "scripts": {
@@ -64,5 +65,8 @@
     "postcss": "^7.0.35",
     "prop-types": "^15.7.2",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.0"
+  },
+  "rules": {
+    "linebreak-style": 0
   }
 }
