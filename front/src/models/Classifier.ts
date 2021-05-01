@@ -19,6 +19,7 @@ export interface ConfusionMatrix {
 export interface ClassifierResult {
   'classifierId': string;
   'date': Date;
+  'score': number;
   'AUC': number;
   'accuracy': number;
   'image': string;

@@ -1,6 +1,5 @@
 import { Link, useParams, useRouteMatch } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-// @ts-ignore
 import * as Yup from 'yup';
 import { DocumentDownloadIcon } from '@heroicons/react/solid';
 import H from '../helpers';
@@ -9,7 +8,8 @@ import PageHeader from '../components/PageHeader';
 import {
   getClassifier,
   getClassifierDefaultFormData,
-  getClassifierResult, getSavedClassifierResult,
+  getClassifierResult,
+  getSavedClassifierResult, isClassifierResultSaved,
   useLocalStorage
 } from '../services/classifiers-service';
 import {
@@ -33,6 +33,7 @@ import LoadingIndicator from '../components/LoadingIndicator';
 import Collapsible from '../components/Collapsible';
 import { ClassifierResult } from '../models/Classifier';
 import ConfusionMatrixTable from '../components/ConfusionMatrixTable';
+import Modal from '../components/Modal';
 
 interface ParamTypes {
   classifierId: string;
@@ -53,7 +54,9 @@ const Classifier = () => {
   const [fetchingDataset, setFetchingDataset] = useState(false);
   const [classifierResult, setClassifierResult] = useState<ClassifierResult | null>(null);
   const [fetchingClassifierResult, setFetchingClassifierResult] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const setSavedClassifierResult = useLocalStorage(`${classifierId}-save`, {})[1];
+
   const initValidationSchemaForm = (form: Record<string, ClassifierParam>) => {
     const finalClassifierValidationSchema = {} as Record<string, any>;
 
@@ -165,7 +168,7 @@ const Classifier = () => {
       <Card className="mb-8">
         <div>
           <Collapsible
-            collapsibleTitle={route === 'predictions' ? 'Afficher le dataset' : 'Afficher le dataset utilisé pour la prédiction'}
+            collapsibleTitle="Afficher le dataset"
             className="mb-8"
           >
             {fetchingDataset
@@ -202,17 +205,19 @@ const Classifier = () => {
                 </div>
                 <div className="flex flex-col sm:flex-row mt-12 sm:w-fit sm:mt-12 sticky top-0">
                   <Button className="mr-4" type="submit">
-                    Générer un
-                    {' '}
-                    {classifierResult && <span> nouveau </span>}
-                    {' '}
-                    modèle
+                    Générer un {classifierResult && <span> nouveau </span>} modèle
                   </Button>
                   {classifierResult && (
                     <Button
                       className="mt-4 sm:mt-0"
                       btnStyle="secondary"
-                      onClick={() => setSavedClassifierResult(classifierResult)}
+                      onClick={() => {
+                        if (isClassifierResultSaved(classifierId)) {
+                          setIsModalOpen(true);
+                        } else {
+                          setSavedClassifierResult(classifierResult);
+                        }
+                      }}
                     >
                       Sauvegarder ce modèle
                     </Button>
@@ -229,7 +234,7 @@ const Classifier = () => {
         </div>
       </Card>
       <Card>
-        <h2>Modèle généré</h2>
+        <h2>Modèle généré {classifierResult && <span className="text-gray-400 font-normal text-base">(score {classifierResult.score}%)</span>}</h2>
         {(!fetchingClassifierResult && classifierResult === null)
         && (
           <div className="flex justify-center py-4">
@@ -247,7 +252,7 @@ const Classifier = () => {
             <div>
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 mb-8 mt-4">
                 <div>
-                  <h3>
+                  <h3 className="h-14">
                     Echantillon testé (
                     {classifierResult.dataEtPrediction.data.length}
                     )
@@ -306,6 +311,15 @@ const Classifier = () => {
                   </div>
                 </div>
               </div>
+              <Modal
+                isOpen={isModalOpen}
+                setIsOpen={setIsModalOpen}
+                title="Attention"
+                onClickValidate={() => setSavedClassifierResult(classifierResult)}
+              >
+                En créant une nouvelle sauvegarde pour ce modèle,
+                vous allez perdre l&apos;ancienne.
+              </Modal>
             </div>
           )
         }

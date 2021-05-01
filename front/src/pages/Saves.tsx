@@ -9,19 +9,20 @@ const Saves = () => {
   const [classifierResults, setClassifierResults] = useState([] as ClassifierResult[]);
 
   useEffect(() => {
-    setClassifierResults(getSavedClassifierResults());
+    setClassifierResults(getSavedClassifierResults().sort((a, b) => b.score - a.score));
   }, []);
 
   return (
     <div>
-      <PageHeader>Prédictions sauvegardées</PageHeader>
+      <PageHeader>Modèles sauvegardés</PageHeader>
       <Card className={classifierResults.length === 0 ? 'text-center' : ''}>
         {classifierResults.length === 0 && (
-          <span>Aucune prédiction n&apos;a encore été sauvegardée</span>
+          <span>Aucun modèle n&apos;a encore été sauvegardé</span>
         )}
         {classifierResults.length > 0 && classifierResults.map((classifierResult, index) => (
           <SavedClassifierCard
             key={classifierResult.AUC}
+            isFirst={index === 0}
             classifierResult={classifierResult}
             className={`${index !== classifierResults.length - 1 ? 'mb-6' : ''}`}
           />

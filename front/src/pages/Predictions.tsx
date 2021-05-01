@@ -9,7 +9,7 @@ const Predictions = () => {
 
   return (
     <div>
-      <h1>Prédictions</h1>
+      <h1>Générer un modèle</h1>
       <Card>
         <div>
           <h2>Choisir un classifieur</h2>

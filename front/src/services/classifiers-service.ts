@@ -198,7 +198,6 @@ export async function getClassifierResult(
   const fetchedClassifierResult = response.data;
 
   const {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     dataEtPrediction = [],
     dataNewPrediction = [],
     ...finalClassifierResult
@@ -252,4 +251,9 @@ export function getSavedClassifierResult(classifierId: string): ClassifierResult
     return JSON.parse(item) as ClassifierResult;
   }
   return null;
+}
+
+export function isClassifierResultSaved(classifierId: string): boolean {
+  const savedClassifierResult = getSavedClassifierResult(classifierId);
+  return !!savedClassifierResult;
 }

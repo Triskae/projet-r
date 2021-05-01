@@ -1,5 +1,5 @@
 const serverVars = {
-  apiBaseURL: 'http://api.r-with-node.tk'
+  apiBaseURL: 'http://localhost:8080'
 };
 
 const localVars = {
