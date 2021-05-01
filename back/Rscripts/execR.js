@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const R = require('r-script')
 const core = require('./core')
 const H = require('../helpers')
@@ -31,18 +32,18 @@ module.exports = async (inputs, rScript) => {
     }
 
     return {
-        accuracy: H.getAccuracyFromMatrix([
+        accuracy: _.round(H.getAccuracyFromMatrix([
             CM.predictedPositive,
             CM.predictedNegative,
-        ]),
-        AUC: parseFloat(AUC),
+        ]),3),
+        AUC: _.round(parseFloat(AUC),3),
         image,
         dataEtPrediction: H.Rlist_to_array(dataEtPrediction),
         dataNewPrediction: H.Rlist_to_array(dataNewPrediction),
         confusionMatrix: [CM.predictedPositive, CM.predictedNegative],
-        score:(parseFloat(AUC)+H.getAccuracyFromMatrix([
+        score:_.round(100*(parseFloat(AUC)+H.getAccuracyFromMatrix([
             CM.predictedPositive,
             CM.predictedNegative,
-        ]))/2
+        ]))/2)
     }
 }

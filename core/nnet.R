@@ -44,7 +44,7 @@ test_nnet <- function(arg1, arg2, arg3, arg4){
   nn_pred <- prediction(nn_prob[,1], data_et$default)
   nn_perf <- performance(nn_pred,"tpr","fpr")
 
-  plot(nn_perf, main = "Réseaux de neurones nnet()", add = FALSE, col = arg4)
+  plot(nn_perf, main = "Reseaux de neurones nnet()", add = FALSE, col = arg4)
     dev.off()
 
   # Calcul de l'AUC
