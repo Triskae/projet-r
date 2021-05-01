@@ -40,5 +40,9 @@ module.exports = async (inputs, rScript) => {
         dataEtPrediction: H.Rlist_to_array(dataEtPrediction),
         dataNewPrediction: H.Rlist_to_array(dataNewPrediction),
         confusionMatrix: [CM.predictedPositive, CM.predictedNegative],
+        score:(parseFloat(AUC)+H.getAccuracyFromMatrix([
+            CM.predictedPositive,
+            CM.predictedNegative,
+        ]))/2
     }
 }
