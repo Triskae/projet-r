@@ -1,9 +1,14 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams, useRouteMatch } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import Card from '../components/Card';
 import PageHeader from '../components/PageHeader';
-import { getClassifier, getClassifierDefaultFormData, getClassifierResult } from '../services/classifiers-service';
+import {
+  getClassifier,
+  getClassifierDefaultFormData,
+  getClassifierResult, getSavedClassifierResult,
+  useLocalStorage
+} from '../services/classifiers-service';
 import {
   ClassifierParam,
   NumberParam,
@@ -31,6 +36,9 @@ interface ParamTypes {
 }
 
 const Classifier = () => {
+  const { path } = useRouteMatch();
+  const route = path.split('/')[1];
+
   const { classifierId } = useParams<ParamTypes>();
   const classifier = getClassifier(classifierId);
   const classifierFormData = getClassifierDefaultFormData(classifier);
@@ -42,6 +50,7 @@ const Classifier = () => {
   const [fetchingDataset, setFetchingDataset] = useState(false);
   const [classifierResult, setClassifierResult] = useState<ClassifierResult | null>(null);
   const [fetchingClassifierResult, setFetchingClassifierResult] = useState(false);
+  const [savedClassifierResult, setSavedClassifierResult] = useLocalStorage(`${classifierId}-save`, {});
 
   const initValidationSchemaForm = (form: Record<string, ClassifierParam>) => {
     const finalClassifierValidationSchema = {} as Record<string, any>;
@@ -81,7 +90,12 @@ const Classifier = () => {
     }
 
     fetchDataset();
-    initValidationSchemaForm(classifier.params);
+
+    if (route === 'predictions') {
+      initValidationSchemaForm(classifier.params);
+    } else {
+      setClassifierResult(getSavedClassifierResult(classifierId));
+    }
   }, [classifier]);
 
   const getFormElement = (elName: string, elSchema: ClassifierParam) => {
@@ -148,7 +162,10 @@ const Classifier = () => {
       <PageHeader displayBackButton>{classifier.name}</PageHeader>
       <Card className="mb-8">
         <div>
-          <Collapsible collapsibleTitle="Afficher le dataset" className="mb-8">
+          <Collapsible
+            collapsibleTitle={route === 'predictions' ? 'Afficher le dataset' : 'Afficher le dataset utilisé pour la prédiction'}
+            className="mb-8"
+          >
             {fetchingDataset
               ? (
                 <div className="flex justify-center">
@@ -166,21 +183,47 @@ const Classifier = () => {
                 />
               )}
           </Collapsible>
-          <h2>Choix des variables</h2>
-          <Form
-            initialValues={classifierFormData}
-            validationSchema={classifierValidationSchema}
-            onSubmit={onSubmit}
-          >
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {Object.keys(classifier.params).map((key) => (
-                <div key={key}>
-                  {getFormElement(key, classifier.params[key])}
+          {route === 'predictions' && (
+            <>
+              <h2>Choix des variables</h2>
+              <Form
+                initialValues={classifierFormData}
+                validationSchema={classifierValidationSchema}
+                onSubmit={onSubmit}
+              >
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {Object.keys(classifier.params).map((key) => (
+                    <div key={key}>
+                      {getFormElement(key, classifier.params[key])}
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <Button className="mt-12 w-fit">Prédire un résultat</Button>
-          </Form>
+                <div className="flex flex-col sm:flex-row mt-12 sm:w-fit sm:mt-12 sticky top-0">
+                  <Button className="mr-4" type="submit">
+                    Prédire un
+                    {' '}
+                    {classifierResult && <span> nouveau </span>}
+                    {' '}
+                    résultat
+                  </Button>
+                  {classifierResult && (
+                    <Button
+                      className="mt-4 sm:mt-0"
+                      btnStyle="secondary"
+                      onClick={() => setSavedClassifierResult(classifierResult)}
+                    >
+                      Sauvegarder ce modèle
+                    </Button>
+                  )}
+                </div>
+              </Form>
+            </>
+          )}
+          {route === 'saves' && (
+            <Link to={`/predictions/${classifier.id}`} className="overflow-hidden">
+              <Button className="w-fit">Effectuer une nouvelle prédiction</Button>
+            </Link>
+          )}
         </div>
       </Card>
       <Card>
@@ -200,11 +243,6 @@ const Classifier = () => {
         {
           classifierResult !== null && (
             <div>
-              <span>
-                AUC :
-                {' '}
-                {classifierResult.AUC}
-              </span>
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 mb-8 mt-4">
                 <div>
                   <h3>
@@ -236,6 +274,11 @@ const Classifier = () => {
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 mb-8">
                 <div>
                   <h3>Courbe</h3>
+                  <span>
+                    AUC :
+                    {' '}
+                    {classifierResult.AUC}
+                  </span>
                   <img src={`data:image/jpeg;base64,${classifierResult.image}`} alt="courbe" />
                 </div>
                 <div>

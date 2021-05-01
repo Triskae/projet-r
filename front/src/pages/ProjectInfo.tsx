@@ -7,7 +7,12 @@ const ProjectInfo = () => (
     <PageHeader>Informations sur le projet</PageHeader>
     <Card>
       <div>
-        <span>Contenu</span>
+        <div className="mb-12">
+          <h2>Présentation du projet</h2>
+          <p>Contenu/vidéo</p>
+        </div>
+        <h2>Comment interpréter les prédictions</h2>
+        <p>Contenu</p>
       </div>
     </Card>
   </div>
