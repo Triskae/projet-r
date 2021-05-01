@@ -1,9 +1,9 @@
 const serverVars = {
-  apiBaseURL: 'http://localhost:8080'
+  apiBaseURL: 'https://api.r-with-node.tk'
 };
 
 const localVars = {
-  apiBaseURL: 'http://api.r-with-node.tk'
+  apiBaseURL: 'https://api.r-with-node.tk'
 };
 
 export default function getConfiguration() {
