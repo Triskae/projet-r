@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
-import { Menu, Transition } from '@headlessui/react';
-import { ChevronDownIcon, PencilIcon } from '@heroicons/react/solid';
+import { format, parseJSON } from 'date-fns';
+import { fr } from 'date-fns/locale';
 import { ClassifierResult } from '../models/Classifier';
 import { getClassifier } from '../services/classifiers-service';
 import Button from './Button';
@@ -15,6 +15,7 @@ interface SavedClassifierCardProps {
 const SavedClassifierCard = ({ classifierResult, className }: SavedClassifierCardProps) => {
   const savedClassifierCardClassName = classNames('bg-white overflow-hidden rounded-lg border', className);
   const classifier = getClassifier(classifierResult.classifierId);
+  const date = new Date();
 
   return (
     <div className={savedClassifierCardClassName}>
@@ -23,6 +24,11 @@ const SavedClassifierCard = ({ classifierResult, className }: SavedClassifierCar
           <div className="flex flex-col mr-4 overflow-hidden">
             <span className="font-medium whitespace-nowrap overflow-hidden overflow-ellipsis mb-2">{classifier.name}</span>
             <span className="text-sm text-gray-400">
+              Sauvegardée le
+              {' '}
+              {format(parseJSON(classifierResult.date), 'EEEE d MMMM à hh:m', { locale: fr })}
+              {' '}
+              ·
               AUC :
               {' '}
               {classifierResult.AUC}
